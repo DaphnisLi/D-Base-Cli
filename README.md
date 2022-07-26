@@ -2,6 +2,8 @@
 基础项目脚手架
 
 ## 依赖解释
+
+```js
 "devDependencies": {
   "@types/node": "^18.6.1", // node.js 的类型定义包
   "typescript": "^4.7.4" // typescript
@@ -13,3 +15,4 @@
   "inquirer": "^9.0.2", // 通用交互式命令行用户界面，收集用户的选择
   "shelljs": "^0.8.5" // 在 node.js 中使用 unix shell 命令
 }
+```
