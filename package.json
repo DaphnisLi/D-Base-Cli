@@ -2,36 +2,65 @@
   "name": "daphnis-base-cli",
   "version": "1.0.0",
   "description": "基础项目脚手架",
-  "main": "./dist/index.js",
+  "main": "./lib/index.js",
   "bin": {
-    "ts-cli": "./bin/daphnis-base-cli.js"
+    "daphnis-base-cli": "./bin/daphnis-base-cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:comment": "typeScript 基础的构建能力",
+    "build": "rm -rf lib && tsc --build",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "commit-lint": "commitlint --from origin/master --to HEAD"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run commit-lint",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{jsx,js,ts,tsx}": [
+      "eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx"
+    ]
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DaphnisLi/daphnis-base-cli.git"
   },
-  "author": "",
+  "author": "Daphnis",
+  "keywords": [
+    "cli"
+  ],
+  "files": [
+    "package.json",
+    "README.md",
+    "lib"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/DaphnisLi/daphnis-base-cli/issues"
   },
   "homepage": "https://github.com/DaphnisLi/daphnis-base-cli#readme",
   "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@nicecode/changelog": "^0.2.0",
     "@types/node": "^18.6.1",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.31.0",
+    "conventional-changelog-cli": "^2.2.2",
     "eslint": "^8.20.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "standard": "^17.0.0",
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "chalk": "^5.0.1",
+    "chalk": "^4.1.0",
     "clear-console": "^1.1.0",
-    "commander": "^9.4.0",
-    "inquirer": "^9.0.2",
-    "shelljs": "^0.8.5"
+    "commander": "^6.2.0",
+    "inquirer": "^7.3.3",
+    "shelljs": "^0.8.4"
   }
 }

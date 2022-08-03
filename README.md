@@ -16,3 +16,37 @@
   "shelljs": "^0.8.5" // 在 node.js 中使用 unix shell 命令
 }
 ```
+
+## fs 相关文章
+[文章链接](https://juejin.cn/post/6844903677782654983)
+
+## comander 相关文章
+[文章链接](https://juejin.cn/post/6844903586833711112)
+
+## shelljs
+[文档](https://github.com/shelljs/shelljs)
+
+# 新建项目后和 git 远端仓库关联
+git add .
+git commit -m "仓库初始化"
+git remote add origin url
+git remote -v
+git push origin master:master
+
+# 本地调试
+sudo -s
+cd 到项目根目录
+npm run build
+npm link
+
+卸载 link
+npm unlink daphnis-base-cli
+
+每次改完代码都要 build, 因为 daphnis-base-cli.js 中 import('../lib')
+
+# 发布
+1、git push
+2、npm run changelog
+3、修改 version
+4、git push
+5、sh publish.sh

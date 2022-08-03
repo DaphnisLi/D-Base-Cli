@@ -17,11 +17,30 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "comma-dangle": ["error", "always-multiline"],
-    "operator-linebreak": ["error", "before"],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": false
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "off",
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
+    "operator-linebreak": [
+      "error",
+      "before"
+    ],
     "space-before-function-paren": [
       "error",
-      { "anonymous": "always", "named": "always", "asyncArrow": "always" }
+      {
+        "anonymous": "always",
+        "named": "always",
+        "asyncArrow": "always"
+      }
     ],
     "handle-callback-err": "off",
     "camelcase": "off",
