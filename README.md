@@ -7,7 +7,6 @@ https://www.npmjs.com/package/daphnis-base-cli
 ## 使用
 ```
 npx daphnis-base-cli newProject
-
 ```
 
 ## [依赖解释](./DEPENDENCIES.md)
