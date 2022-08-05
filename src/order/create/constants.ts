@@ -3,7 +3,7 @@
 /** 交互 */
 export enum Interact {
   STANDARD = 'standard',
-  CONFIRM = 'confirm',
+  TYPESCRIPT = 'TypeScript',
 }
 
 export enum Feature {
@@ -13,5 +13,6 @@ export enum Feature {
   PRETTIER = 'Prettier',
   EDITORCONFIG = 'Editorconfig',
   COMMITLINT = 'Commitlint',
-  COMMITCHECKESLINT = 'CommitCheckESLint'
+  COMMITCHECKESLINT = 'CommitCheckESLint',
+  TYPESCRIPT = 'TypeScript'
 }

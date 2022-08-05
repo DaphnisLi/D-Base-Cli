@@ -102,8 +102,7 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 `
 
-export const CommitlintConfigJs = `
-module.exports = {
+export const CommitlintConfigJs = `module.exports = {
   extends: ['@commitlint/config-conventional'],
   rules: {
     'type-enum': [2, 'always', ['feat', 'fix', 'docs', 'style', 'refactor', 'test', 'revert', 'release', 'chore']],
@@ -113,9 +112,35 @@ module.exports = {
       ['lower-case', 'camel-case', 'snake-case', 'kebab-case', 'sentence-case', 'start-case', 'pascal-case', 'upper-case'],
     ],
   },
-}
-`
+}`
 
 export const Gitignore = `
 node_modules
 `
+
+export const TsconfigJson = `{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "inlineSourceMap":true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "stripInternal": true,
+    "pretty": true,
+    "declaration": true,
+    "outDir": "lib",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["src/*"]
+    }
+  },
+  "exclude": [
+    "lib",
+    "node_modules",
+    "test"
+  ]
+}`

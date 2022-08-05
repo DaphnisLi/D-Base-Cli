@@ -13,9 +13,9 @@ import { Feature } from './constants'
 import { yellow } from 'chalk'
 
 /**
- * 退出安装
- * @param feature 所选功能列表
- * @param f 功能名
+ * 退出安装, 适用于 checkbox
+ * @param featureList 所选功能列表
+ * @param feature 功能名
  */
 const isQuitInstall = (featureList: Feature[], feature: Feature) => !featureList.some(item => item === feature)
 
@@ -209,4 +209,15 @@ export const initRepository = () => {
   shell.echo(yellow('git 初始化'))
   shell.exec('git init')
   createConfigFile('.gitignore')
+}
+
+/**
+ * 安装 typeScript
+ */
+export const installTypeScript = (isInstallTypeScript: boolean) => {
+  if (!isInstallTypeScript) return
+  startInstall(Feature.TYPESCRIPT)
+  shell.exec('npm i typescript -D')
+  createConfigFile('tsconfig.json')
+  successInstall(Feature.TYPESCRIPT)
 }
