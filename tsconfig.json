@@ -1,24 +1,24 @@
 {
-  "compileOnSave": true,
+  "compileOnSave": true, // 设置保存文件的时候自动编译, 但需要编译器支持
   "compilerOptions": {
-    "target": "ES2018",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "inlineSourceMap":true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "stripInternal": true,
-    "pretty": true,
-    "declaration": true,
-    "outDir": "lib",
-    "baseUrl": "./",
-    "paths": {
+    "target": "ES6", // 目标语言的版本
+    "module": "ES6", // 生成代码的模板标准
+    "moduleResolution": "node", // 模块解析策略，ts默认用node的解析策略，即相对的方式导入
+    "experimentalDecorators": true, // 启用对 TC39 第 2 阶段草稿装饰器的实验性支持
+    "emitDecoratorMetadata": true, // 为源文件中的修饰声明发出设计类型元数据
+    "inlineSourceMap":true, // 生成目标文件的inline SourceMap，inline SourceMap会包含在生成的js文件中
+    "noImplicitThis": true, // 不允许this有隐式的any类型
+    "noUnusedLocals": true, // 检查只声明、未使用的局部变量(只提示不报错)
+    "stripInternal": true, // 禁用发出@internal在其 JSDoc 注释中的声明
+    "pretty": true, // 在 TypeScript 的输出中启用颜色和格式，以使编译器错误更易于阅读
+    "declaration": true, // 从项目中的 TypeScript 和 JavaScript 文件生成 .d.ts 文件
+    "outDir": "lib", // 指定构建输出目录
+    "baseUrl": "./", // 解析非相对模块的基地址，默认是当前目录
+    "paths": { // 路径映射，相对于baseUrl
       "*": ["src/*"]
     }
   },
-  "exclude": [
+  "exclude": [ // 指定编译器需要排除的文件或文件夹
     "lib",
     "node_modules",
     "test"
