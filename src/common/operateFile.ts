@@ -20,7 +20,7 @@ export const readJsonFile = <T>(filePath: string): T => {
  * @param filePath json 文件的路径, 这里是相对路径, 相对于项目根目录的路径
  * @param content  json 内容
  */
-export const writeJsonFile = <T>(filePath: string, content: T): void => {
+export const writeJsonFile = <T>(filePath: string, content: T) => {
   writeFileSync(filePath, JSON.stringify(content, null, 2))
 }
 
@@ -30,7 +30,7 @@ export const writeJsonFile = <T>(filePath: string, content: T): void => {
  * process.cwd() 进程当前工作目录
  * return 工作目录/projectName
  */
-export const getProjectPath = (projectName: string): string => {
+export const getProjectPath = (projectName: string) => {
   return resolve(process.cwd(), projectName)
 }
 

@@ -27,8 +27,8 @@ export interface ScriptsCommand {
 /**
  * 所选功能, key 是交互选项的 name
  */
-export interface SelectFeatureResult {
-  [key: string]: any
+export type SelectFeatureResult<T extends Feature> = {
+  [key in keyof T]: any
 }
 
 interface ChoicesType {

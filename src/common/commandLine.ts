@@ -21,9 +21,10 @@ export const end = (projectName: string) => {
 /**
  * 开始安装提示
  * @param name 功能名
+ * 如果需要添加新类型, 可以对 T 进行扩展, 用 |
  */
-export const startInstall = (name: Feature | string) => {
-  shell.echo(yellow(`开始安装 ${name} 🙄️`))
+export const startInstall = <T extends Feature | string>(featureName: T) => {
+  shell.echo(yellow(`开始安装 ${featureName} 🙄️`))
   shell.echo('')
 }
 
@@ -31,15 +32,15 @@ export const startInstall = (name: Feature | string) => {
  * 安装完成提示
  * @param name 功能名
  */
-export const successInstall = (name: Feature | string) => {
-  shell.echo(green(`成功安装 ${name} 😁`))
+export const successInstall = <T extends Feature | string>(featureName: T) => {
+  shell.echo(green(`成功安装 ${featureName} 😁`))
   shell.echo('')
 }
 
 /**
  * 交互式命令行
  */
-export const selectFeature = async (interactCommand: InteractCommandType[]): Promise<SelectFeatureResult> => {
+export const selectFeature = async (interactCommand: InteractCommandType[]): Promise<SelectFeatureResult<Feature>> => {
   // 清空命令行
   clear()
   // 输出信息
@@ -55,7 +56,7 @@ export const selectFeature = async (interactCommand: InteractCommandType[]): Pro
  * 安装用户选择的功能
  * @param feature 功能列表
  */
-export const installFeature = (feature: SelectFeatureResult, defaultInstallFeature: () => void, interactMap: {
+export const installFeature = <T extends Feature>(feature: SelectFeatureResult<T>, defaultInstallFeature: () => void, interactMap: {
   [key in Interact]: (interactResult: any) => void
 }) => {
   shell.echo(green('开始安装所选功能 😁'))

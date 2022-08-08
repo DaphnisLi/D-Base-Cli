@@ -2,7 +2,7 @@
   "compileOnSave": true, // 设置保存文件的时候自动编译, 但需要编译器支持
   "compilerOptions": {
     "target": "ES6", // 目标语言的版本
-    "module": "ES6", // 生成代码的模板标准
+    "module": "CommonJS", // 生成代码的模板标准
     "moduleResolution": "node", // 模块解析策略，ts默认用node的解析策略，即相对的方式导入
     "experimentalDecorators": true, // 启用对 TC39 第 2 阶段草稿装饰器的实验性支持
     "emitDecoratorMetadata": true, // 为源文件中的修饰声明发出设计类型元数据
