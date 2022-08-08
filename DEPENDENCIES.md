@@ -23,3 +23,7 @@
 
 ## shelljs
 [官方文档](https://github.com/shelljs/shelljs)
+
+## typeScript
+[compilerOptions](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+[tsconfig.json 配置](https://juejin.cn/post/6844904178234458120#heading-14)
