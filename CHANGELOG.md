@@ -1,4 +1,9 @@
-## 1.2.1 (2022-08-05)
+## 1.2.2 (2022-08-08)
+
+
+### Bug Fixes
+
+* 修改类型及 ts 配置 ([5509992](https://github.com/DaphnisLi/daphnis-base-cli/commit/5509992283f83e70bac46c59777c8b25ffae1079))
 
 
 ### Features
