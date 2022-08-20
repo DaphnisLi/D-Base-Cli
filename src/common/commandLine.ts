@@ -19,22 +19,20 @@ export const end = (projectName: string) => {
 }
 
 /**
- * 开始安装提示
+ * 安装提示
  * @param name 功能名
- * 如果需要添加新类型, 可以对 T 进行扩展, 用 |
+ * 如果需要添加新类型
  */
-export const startInstall = <T extends Feature | string>(featureName: T) => {
-  shell.echo(yellow(`开始安装 ${featureName} 🙄️`))
-  shell.echo('')
-}
-
-/**
- * 安装完成提示
- * @param name 功能名
- */
-export const successInstall = <T extends Feature | string>(featureName: T) => {
-  shell.echo(green(`成功安装 ${featureName} 😁`))
-  shell.echo('')
+export const installPoint = (featureName: Feature | string) => {
+  const start = () => {
+    shell.echo(yellow(`开始安装 ${featureName} 🙄️`))
+    shell.echo('')
+  }
+  const success = () => {
+    shell.echo(green(`成功安装 ${featureName} 😁`))
+    shell.echo('')
+  }
+  return [start, success] // 为什么用 [] 而不用 {} ? 防止重名
 }
 
 /**

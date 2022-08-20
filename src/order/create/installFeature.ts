@@ -3,7 +3,7 @@
 import * as shell from 'shelljs'
 import { createConfigFile } from '../../common/operateFile'
 import { writePackage } from '../../common/operateFileContent'
-import { startInstall, successInstall } from '../../common/commandLine'
+import { installPoint } from '../../common/commandLine'
 import { Feature } from './constants'
 import { yellow } from 'chalk'
 
@@ -19,8 +19,8 @@ const isQuitInstall = (featureList: Feature[], feature: Feature) => !featureList
  */
 export const installChangelog = (featureList: Feature[]) => {
   if (isQuitInstall(featureList, Feature.CHANGELOG)) return
-
-  startInstall(Feature.CHANGELOG)
+  const [start, success] = installPoint(Feature.CHANGELOG)
+  start()
   shell.exec('npm i @nicecode/changelog conventional-changelog-cli -D')
 
   writePackage(c => {
@@ -29,7 +29,7 @@ export const installChangelog = (featureList: Feature[]) => {
       changelog: 'conventional-changelog -p angular -i CHANGELOG.md -s',
     }
   })
-  successInstall(Feature.CHANGELOG)
+  success()
 }
 
 /**
@@ -38,7 +38,8 @@ export const installChangelog = (featureList: Feature[]) => {
 export const installESLint = (featureList: Feature[]) => {
   if (isQuitInstall(featureList, Feature.ESLINT)) return
 
-  startInstall(Feature.ESLINT)
+  const [start, success] = installPoint(Feature.ESLINT)
+  start()
   shell.exec('npm i @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint standard -D')
   createConfigFile('.eslintrc')
   createConfigFile('.eslintignore')
@@ -49,7 +50,7 @@ export const installESLint = (featureList: Feature[]) => {
       'lint-fix': 'eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src --fix && stylelint ./src --fix',
     }
   })
-  successInstall(Feature.ESLINT)
+  success()
 }
 
 /**
@@ -58,10 +59,11 @@ export const installESLint = (featureList: Feature[]) => {
 export const installStylelint = (featureList: Feature[]) => {
   if (isQuitInstall(featureList, Feature.STYLELINT)) return
 
-  startInstall(Feature.STYLELINT)
+  const [start, success] = installPoint(Feature.STYLELINT)
+  start()
   shell.exec('npm i stylelint stylelint-config-standard -D')
   createConfigFile('.stylelintrc')
-  successInstall(Feature.STYLELINT)
+  success()
 }
 
 /**
@@ -71,7 +73,8 @@ export const installStylelint = (featureList: Feature[]) => {
 export const installPrettier = (featureList: Feature[]) => {
   if (isQuitInstall(featureList, Feature.PRETTIER)) return
 
-  startInstall(Feature.PRETTIER)
+  const [start, success] = installPoint(Feature.PRETTIER)
+  start()
   shell.exec('npm i prettier -D')
   createConfigFile('.prettierrc')
 
@@ -81,7 +84,7 @@ export const installPrettier = (featureList: Feature[]) => {
       prettier: 'prettier --write "src/**/*.ts"',
     }
   })
-  successInstall(Feature.PRETTIER)
+  success()
 }
 
 /**
@@ -90,9 +93,10 @@ export const installPrettier = (featureList: Feature[]) => {
 export const installEditorconfig = (featureList: Feature[]) => {
   if (isQuitInstall(featureList, Feature.EDITORCONFIG)) return
 
-  startInstall(Feature.EDITORCONFIG)
+  const [start, success] = installPoint(Feature.EDITORCONFIG)
+  start()
   createConfigFile('.editorconfig')
-  successInstall(Feature.EDITORCONFIG)
+  success()
 }
 
 /**
@@ -114,7 +118,8 @@ export const installHusky = (featureList: Feature[]) => {
 export const installCommitlint = (featureList: Feature[]) => {
   if (isQuitInstall(featureList, Feature.COMMITLINT)) return
 
-  startInstall(Feature.COMMITLINT)
+  const [start, success] = installPoint(Feature.COMMITLINT)
+  start()
   shell.exec('npm i @commitlint/cli @commitlint/config-conventional -D')
   shell.exec('npx husky add .husky/pre-push "npm run commit-lint" ')
 
@@ -133,7 +138,7 @@ export const installCommitlint = (featureList: Feature[]) => {
   })
 
   createConfigFile('commitlint.config.js')
-  successInstall(Feature.COMMITLINT)
+  success()
 }
 
 /**
@@ -162,7 +167,8 @@ const installLintStaged = () => {
 export const installCommitCheckESLint = (featureList: Feature[]) => {
   if (isQuitInstall(featureList, Feature.COMMITCHECKESLINT)) return
 
-  startInstall(Feature.COMMITCHECKESLINT)
+  const [start, success] = installPoint(Feature.COMMITCHECKESLINT)
+  start()
   installLintStaged()
 
   writePackage('lint-staged', {
@@ -170,7 +176,7 @@ export const installCommitCheckESLint = (featureList: Feature[]) => {
   })
 
   featureList.includes(Feature.STYLELINT) && installCommitCheckStylelint()
-  successInstall(Feature.COMMITCHECKESLINT)
+  success()
 }
 
 /**
@@ -190,9 +196,10 @@ const installCommitCheckStylelint = () => {
  * 这是 node.js 的类型定义包
  */
 export const installTypesNode = () => {
-  startInstall('@types/node')
+  const [start, success] = installPoint('@types/node')
+  start()
   shell.exec('npm i @types/node -D')
-  successInstall('@types/node')
+  success()
 }
 
 /**
@@ -209,8 +216,9 @@ export const initRepository = () => {
  */
 export const installTypeScript = (isInstallTypeScript: boolean) => {
   if (!isInstallTypeScript) return
-  startInstall(Feature.TYPESCRIPT)
+  const [start, success] = installPoint(Feature.TYPESCRIPT)
+  start()
   shell.exec('npm i typescript -D')
   createConfigFile('tsconfig.json')
-  successInstall(Feature.TYPESCRIPT)
+  success()
 }
