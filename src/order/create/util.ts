@@ -54,7 +54,7 @@ export const interactCommand: InteractCommandType[] = [
   {
     name: Interact.STANDARD,
     type: 'checkbox',
-    message: '选择需要安装的基础功能, 使用空格多选.',
+    message: '选择需要安装的基础功能, 使用空格多选',
     choices: [
       { name: Feature.CHANGELOG, value: Feature.CHANGELOG },
       { name: Feature.ESLINT, value: Feature.ESLINT },

@@ -1,13 +1,8 @@
 // 各个功能的安装方法
 
 import * as shell from 'shelljs'
-import {
-  readJsonFile,
-  writeJsonFile,
-  createConfigFile,
-} from '../../common/operateFile'
-import { writePackageScripts } from '../../common/operateFileContent'
-import { PackageJSON, ScriptsCommand } from '../../common/types'
+import { createConfigFile } from '../../common/operateFile'
+import { writePackage } from '../../common/operateFileContent'
 import { startInstall, successInstall } from '../../common/commandLine'
 import { Feature } from './constants'
 import { yellow } from 'chalk'
@@ -28,13 +23,12 @@ export const installChangelog = (featureList: Feature[]) => {
   startInstall(Feature.CHANGELOG)
   shell.exec('npm i @nicecode/changelog conventional-changelog-cli -D')
 
-  const commandList: ScriptsCommand[] = [
-    {
-      commandName: 'changelog',
-      command: 'conventional-changelog -p angular -i CHANGELOG.md -s',
-    },
-  ]
-  writePackageScripts(commandList)
+  writePackage(c => {
+    c.scripts = {
+      ...c.scripts,
+      changelog: 'conventional-changelog -p angular -i CHANGELOG.md -s',
+    }
+  })
   successInstall(Feature.CHANGELOG)
 }
 
@@ -47,18 +41,14 @@ export const installESLint = (featureList: Feature[]) => {
   startInstall(Feature.ESLINT)
   shell.exec('npm i @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint standard -D')
   createConfigFile('.eslintrc')
-
-  const commandList: ScriptsCommand[] = [
-    {
-      commandName: 'lint',
-      command: 'eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src && stylelint ./src',
-    },
-    {
-      commandName: 'lint-fix',
-      command: 'eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src --fix && stylelint ./src --fix',
-    },
-  ]
-  writePackageScripts(commandList)
+  createConfigFile('.eslintignore')
+  writePackage(c => {
+    c.scripts = {
+      ...c.scripts,
+      lint: 'eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src && stylelint ./src',
+      'lint-fix': 'eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src --fix && stylelint ./src --fix',
+    }
+  })
   successInstall(Feature.ESLINT)
 }
 
@@ -85,13 +75,12 @@ export const installPrettier = (featureList: Feature[]) => {
   shell.exec('npm i prettier -D')
   createConfigFile('.prettierrc')
 
-  const commandList: ScriptsCommand[] = [
-    {
-      commandName: 'prettier',
-      command: 'prettier --write "src/**/*.ts"',
-    },
-  ]
-  writePackageScripts(commandList)
+  writePackage(c => {
+    c.scripts = {
+      ...c.scripts,
+      prettier: 'prettier --write "src/**/*.ts"',
+    }
+  })
   successInstall(Feature.PRETTIER)
 }
 
@@ -129,21 +118,20 @@ export const installCommitlint = (featureList: Feature[]) => {
   shell.exec('npm i @commitlint/cli @commitlint/config-conventional -D')
   shell.exec('npx husky add .husky/pre-push "npm run commit-lint" ')
 
-  const commandList: ScriptsCommand[] = [
-    {
-      commandName: 'commit-lint',
-      command: 'commitlint --from origin/master --to HEAD',
-    },
-  ]
-  writePackageScripts(commandList)
-  const packageJson = readJsonFile<PackageJSON>('./package.json')
-  packageJson.husky = {
-    ...packageJson?.husky || {},
-    hooks: {
-      ...packageJson?.husky?.hooks || {},
-      'pre-push': 'npm run commit-lint',
-    },
-  }
+  writePackage(c => {
+    c.scripts = {
+      ...c.scripts,
+      'commit-lint': 'commitlint --from origin/master --to HEAD',
+    }
+    c.husky = {
+      ...c.husky,
+      hooks: {
+        ...c.husky.hooks,
+        'pre-push': 'npm run commit-lint',
+      },
+    }
+  })
+
   createConfigFile('commitlint.config.js')
   successInstall(Feature.COMMITLINT)
 }
@@ -155,14 +143,16 @@ export const installCommitlint = (featureList: Feature[]) => {
 const installLintStaged = () => {
   shell.exec('npm i lint-staged -D')
   shell.exec('npx husky add .husky/pre-commit "npx lint-staged" ')
-  const packageJson = readJsonFile<PackageJSON>('./package.json')
-  packageJson.husky = {
-    ...packageJson?.husky || {},
-    hooks: {
-      ...packageJson?.husky?.hooks || {},
-      'pre-commit': 'lint-staged',
-    },
-  }
+
+  writePackage(c => {
+    c.husky = {
+      ...c.husky,
+      hooks: {
+        ...c.husky.hooks,
+        'pre-commit': 'lint-staged',
+      },
+    }
+  })
 }
 
 /**
@@ -174,11 +164,11 @@ export const installCommitCheckESLint = (featureList: Feature[]) => {
 
   startInstall(Feature.COMMITCHECKESLINT)
   installLintStaged()
-  const packageJson = readJsonFile<PackageJSON>('./package.json')
-  packageJson['lint-staged'] = {
+
+  writePackage('lint-staged', {
     '*.{jsx,js,ts,tsx}': ['eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx'],
-  }
-  writeJsonFile<PackageJSON>('./package.json', packageJson)
+  })
+
   featureList.includes(Feature.STYLELINT) && installCommitCheckStylelint()
   successInstall(Feature.COMMITCHECKESLINT)
 }
@@ -187,9 +177,12 @@ export const installCommitCheckESLint = (featureList: Feature[]) => {
  * commit 时检查 styleLint
  */
 const installCommitCheckStylelint = () => {
-  const packageJson = readJsonFile<PackageJSON>('./package.json')
-  packageJson['lint-staged']['*.{css,scss,less}'] = ['stylelint']
-  writeJsonFile<PackageJSON>('./package.json', packageJson)
+  writePackage(c => {
+    c['lint-staged'] = {
+      ...c['lint-staged'],
+      '*.{css,scss,less}': ['stylelint'],
+    }
+  })
 }
 
 /**
@@ -212,7 +205,7 @@ export const initRepository = () => {
 }
 
 /**
- * 安装 typeScript
+ * 安装 TypeScript
  */
 export const installTypeScript = (isInstallTypeScript: boolean) => {
   if (!isInstallTypeScript) return

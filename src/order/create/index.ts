@@ -8,7 +8,7 @@ import {
   interactCommand,
 } from './util'
 
-import { changePackageInfo } from '../../common/operateFileContent'
+import { writePackage } from '../../common/operateFileContent'
 import { initProjectDir, isFileExist } from '../../common/operateFile'
 import {
   end,
@@ -25,7 +25,7 @@ const create = async (projecrName: string): Promise<void> => {
   // 初始化项目目录
   initProjectDir(projecrName)
   // 改写项目的 package.json 基本信息
-  changePackageInfo(projecrName)
+  writePackage({ name: projecrName })
   // 安装 feature
   installFeature(feature, defaultInstallFeature, interactMap)
   // 结束

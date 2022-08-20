@@ -6,6 +6,7 @@ export enum Interact {
   TYPESCRIPT = 'TypeScript',
 }
 
+/** 功能 */
 export enum Feature {
   CHANGELOG = 'Changelog',
   ESLINT = 'ESLint',

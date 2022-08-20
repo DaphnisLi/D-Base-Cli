@@ -1,26 +1,38 @@
 // 操作文件内容
 
 import { readJsonFile, writeJsonFile } from './operateFile'
-import { PackageJSON, ScriptsCommand } from './types'
+import { PackageJSON } from './types'
 
 /**
- * 写入 package 文件
- * @param scriptsCommand scripts 中的命令
+ * 修改 package 文件
+ *
+ * writePackage('name', 'Daphnis')
+ *
+ * writePackage({ 'name': 'Daphnis', 'version': '1.0.0'  })
+ *
+ * writePackage((packageContent) => {
+ *  packageContent.name = 'Daphnis'
+ *  packageContent.version = '1.0.0'
+ * })
  */
-export const writePackageScripts = (scriptsCommand: ScriptsCommand[]) => {
-  // ? eslint 检查的是 src 下的文件, 所以要记得创建 src 文件
+/* eslint-disable no-redeclare */
+function writePackage (key: keyof PackageJSON, value: string | object): void
+function writePackage (obj: PackageJSON): void
+function writePackage (fun: (packageContent: PackageJSON) => void): void
+function writePackage (param: any, value?: string): void {
   const packageJson = readJsonFile<PackageJSON>('./package.json')
-  scriptsCommand.forEach(item => {
-    packageJson.scripts[item.commandName] = item.command
-  })
+  if (typeof param === 'string') {
+    packageJson[param] = value
+  } else if (typeof param === 'object') {
+    for (const key in param) {
+      packageJson[key] = param[key]
+    }
+  } else if (typeof param === 'function') {
+    param(packageJson)
+  }
   writeJsonFile<PackageJSON>('./package.json', packageJson)
 }
 
-/**
- * 改写项目中 package.json 的 name
- */
-export const changePackageInfo = (projectName: string) => {
-  const packageJSON: PackageJSON = readJsonFile<PackageJSON>('./package.json')
-  packageJSON.name = projectName
-  writeJsonFile<PackageJSON>('./package.json', packageJSON)
+export {
+  writePackage,
 }

@@ -2,16 +2,19 @@
 import { Interact, Feature } from '../order/create/constants'
 
 export interface PackageJSON {
-  name: string
-  version: string
-  description: string
-  scripts: {
+  name?: string
+  version?: string
+  description?: string
+  scripts?: {
     [key: string]: string
   }
-  husky: {
-    hooks: {
+  husky?: {
+    hooks?: {
       [key: string]: string
     }
+  }
+  'lint-staged'?: {
+    [key: string]: string[]
   }
 }
 

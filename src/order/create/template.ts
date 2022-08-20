@@ -115,32 +115,75 @@ export const CommitlintConfigJs = `module.exports = {
 }`
 
 export const Gitignore = `
-node_modules
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/npm-debug.log*
+/yarn-error.log
+/package-lock.json
+
+# production
+/dist
+/docs
+/.docz
+
+# misc
+.DS_Store
+
+# umi
+.umi
+.umi-production
+.umi-test
+.env.local
+.mfsu-production
 `
 
 export const TsconfigJson = `{
-  "compileOnSave": true,
   "compilerOptions": {
-    "target": "ES2018",
-    "module": "commonjs",
+    "target": "ES6",
+    "module": "esnext",
     "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "inlineSourceMap":true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "stripInternal": true,
-    "pretty": true,
+    "importHelpers": true,
+    "jsx": "react",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "outDir": "./dist",
     "declaration": true,
-    "outDir": "lib",
-    "baseUrl": "./",
+    "declarationDir": "./dist",
     "paths": {
-      "*": ["src/*"]
+      "daphnis-hooks": ["./src"],
     }
   },
-  "exclude": [
-    "lib",
-    "node_modules",
-    "test"
-  ]
+  "include": ["src/**/*", "tests/**/*"],
 }`
+
+export const Eslintignore = `
+**/*.svg
+package.json
+package-lock.json
+coverage/
+yarn.lock
+netlify.toml
+yarn-error.log
+*.sh
+*.snap
+.gitignore
+.npmignore
+.prettierignore
+.DS_Store
+.editorconfig
+.eslintignore
+**/*.yml
+node_modules/**/*
+**/*.d.ts
+**/*.md
+**/*.less
+config/
+dist/
+lib/
+`
