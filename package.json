@@ -11,7 +11,8 @@
     "build:comment": "typeScript 基础的构建能力",
     "build": "rm -rf lib && tsc --build",
     "changelog": "rm -rf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s",
-    "commit-lint": "commitlint --from origin/master --to HEAD"
+    "commit-lint": "commitlint --from origin/master --to HEAD",
+    "release": "./scripts/release.js"
   },
   "husky": {
     "hooks": {
@@ -61,6 +62,7 @@
     "clear-console": "^1.1.0",
     "commander": "^6.2.0",
     "inquirer": "^7.3.3",
-    "shelljs": "^0.8.4"
+    "shelljs": "^0.8.4",
+    "semver": "^7.3.7"
   }
 }

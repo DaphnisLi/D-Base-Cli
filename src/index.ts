@@ -1,11 +1,10 @@
 import { program } from 'commander'
 import create from './order/create'
+const { version } = require('../package.json')
 
 // help
-// 先把 eslint 禁用, 不然会报错, 主要是看着别扭。
-/* eslint-disable @typescript-eslint/no-var-requires */
 program
-  .version(`${require('../package.json').version}`, '-v --version') // 获取 cli 版本
+  .version(version, '-v --version') // 获取 cli 版本
   .usage('<command> [options]') // 设置帮助信息的首行提示
 
 // 命令

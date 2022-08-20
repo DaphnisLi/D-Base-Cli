@@ -10,6 +10,7 @@ import {
 import { Feature, Interact } from '../order/create/constants'
 import { SelectFeatureResult, InteractCommandType } from './types'
 import { prompt } from 'inquirer'
+const { version } = require('../package.json')
 
 /**
  * 项目安装成功提示
@@ -43,7 +44,7 @@ export const selectFeature = async (interactCommand: InteractCommandType[]): Pro
   clear()
   // 输出信息
   /* eslint-disable @typescript-eslint/no-var-requires */
-  shell.echo(blue(`DAPHNIS-BASE-CLI v${require('../../package.json').version}`))
+  shell.echo(blue(`DAPHNIS-BASE-CLI V ${version}`))
   shell.echo('开始初始化项目')
   shell.echo('')
 
