@@ -19,7 +19,7 @@
     }
   },
   "exclude": [ // 指定编译器需要排除的文件或文件夹
-    "lib",
+    "dist",
     "node_modules",
     "test"
   ]
