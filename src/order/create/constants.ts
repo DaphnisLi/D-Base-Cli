@@ -3,7 +3,8 @@
 /** 交互 */
 export enum Interact {
   STANDARD = 'standard',
-  TYPESCRIPT = 'TypeScript',
+  TYPESCRIPT = 'typeScript',
+  REACT = 'react'
 }
 
 /** 功能 */
@@ -15,5 +16,9 @@ export enum Feature {
   EDITORCONFIG = 'Editorconfig',
   COMMITLINT = 'Commitlint',
   COMMITCHECKESLINT = 'CommitCheckESLint',
-  TYPESCRIPT = 'TypeScript'
+  TYPESCRIPT = 'TypeScript',
+  REACT = 'React',
+  ROLLUP = 'Rollup',
+  BABEL = 'Babel',
+  DUMI = 'Dumi'
 }

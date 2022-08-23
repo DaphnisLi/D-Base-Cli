@@ -12,31 +12,48 @@ import {
   installCommitlint,
   initRepository,
   installTypeScript,
+  installReact,
+  installRollup,
+  installBabel,
+  installRelease,
+  installDumi,
+  mkdirSrc,
 } from './installFeature'
 import { Interact, Feature } from './constants'
-import { InteractCommandType } from '../../common/types'
+import { InteractCommandType, FeatSelectResult, Interacttype } from '../../common/types'
 
 /**
  * 默认安装的功能
  */
-export const defaultInstallFeature = () => {
-  installTypesNode()
+export const initialConfig = () => {
   initRepository()
+  installTypesNode()
+  installRelease()
 }
 
-const handleStandard = (interactResult: any) => {
-  installHusky(interactResult)
-  installChangelog(interactResult)
-  installESLint(interactResult)
-  installStylelint(interactResult)
-  installPrettier(interactResult)
-  installEditorconfig(interactResult)
-  installCommitlint(interactResult)
-  installCommitCheckESLint(interactResult)
+const handleStandard = (featSelectResult: FeatSelectResult) => {
+  installHusky(featSelectResult)
+  installChangelog(featSelectResult)
+  installESLint(featSelectResult)
+  installStylelint(featSelectResult)
+  installPrettier(featSelectResult)
+  installEditorconfig(featSelectResult)
+  installCommitlint(featSelectResult)
+  installCommitCheckESLint(featSelectResult)
 }
 
-const handleTypeScript = (interactResult: any) => {
-  installTypeScript(interactResult)
+const handleTypeScript = (featSelectResult: FeatSelectResult) => {
+  if (!featSelectResult[Interact.TYPESCRIPT]) return
+  installTypeScript()
+}
+
+const handleReact = (featSelectResult: FeatSelectResult) => {
+  if (!featSelectResult[Interact.REACT]) return
+  installReact()
+  installRollup()
+  installBabel()
+  installDumi()
+  mkdirSrc()
 }
 
 /**
@@ -45,6 +62,7 @@ const handleTypeScript = (interactResult: any) => {
 export const interactMap = {
   [Interact.STANDARD]: handleStandard,
   [Interact.TYPESCRIPT]: handleTypeScript,
+  [Interact.REACT]: handleReact,
 }
 
 /**
@@ -52,8 +70,18 @@ export const interactMap = {
  */
 export const interactCommand: InteractCommandType[] = [
   {
+    name: Interact.REACT,
+    type: Interacttype.CONFIRM,
+    message: '是否安装 React',
+  },
+  {
+    name: Interact.TYPESCRIPT,
+    type: Interacttype.CONFIRM,
+    message: '是否安装 TypeScript',
+  },
+  {
     name: Interact.STANDARD,
-    type: 'checkbox',
+    type: Interacttype.CHECKBOX,
     message: '选择需要安装的基础功能, 使用空格多选',
     choices: [
       { name: Feature.CHANGELOG, value: Feature.CHANGELOG },
@@ -64,10 +92,5 @@ export const interactCommand: InteractCommandType[] = [
       { name: Feature.COMMITLINT, value: Feature.COMMITLINT },
       { name: Feature.COMMITCHECKESLINT, value: Feature.COMMITCHECKESLINT },
     ],
-  },
-  {
-    name: Interact.TYPESCRIPT,
-    type: 'confirm',
-    message: '是否安装 TypeScript',
   },
 ]

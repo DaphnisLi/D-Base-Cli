@@ -8,9 +8,8 @@ import {
   blue,
 } from 'chalk'
 import { Feature, Interact } from '../order/create/constants'
-import { SelectFeatureResult, InteractCommandType } from './types'
+import { FeatSelectResult, InteractCommandType } from './types'
 import { prompt } from 'inquirer'
-const { version } = require('../package.json')
 
 /**
  * 项目安装成功提示
@@ -39,12 +38,12 @@ export const installPoint = (featureName: Feature | string) => {
 /**
  * 交互式命令行
  */
-export const selectFeature = async (interactCommand: InteractCommandType[]): Promise<SelectFeatureResult<Feature>> => {
+export const selectFeature = async (interactCommand: InteractCommandType[]): Promise<FeatSelectResult> => {
   // 清空命令行
   clear()
   // 输出信息
   /* eslint-disable @typescript-eslint/no-var-requires */
-  shell.echo(blue(`DAPHNIS-BASE-CLI V ${version}`))
+  shell.echo(blue(`DAPHNIS-BASE-CLI V ${require('../../package.json').version}`))
   shell.echo('开始初始化项目')
   shell.echo('')
 
@@ -55,7 +54,7 @@ export const selectFeature = async (interactCommand: InteractCommandType[]): Pro
  * 安装用户选择的功能
  * @param feature 功能列表
  */
-export const installFeature = <T extends Feature>(feature: SelectFeatureResult<T>, defaultInstallFeature: () => void, interactMap: {
+export const installFeature = (feature: FeatSelectResult, initialConfig: () => void, interactMap: {
   [key in Interact]: (interactResult: any) => void
 }) => {
   shell.echo(green('开始安装所选功能 😁'))
@@ -63,9 +62,9 @@ export const installFeature = <T extends Feature>(feature: SelectFeatureResult<T
   shell.echo(yellow('过程可能会有些慢呦... 🙄️'))
   shell.echo('')
 
-  defaultInstallFeature()
+  initialConfig()
 
   for (const key in feature) {
-    interactMap[key](feature[key])
+    interactMap[key](feature)
   }
 }

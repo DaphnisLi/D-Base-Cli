@@ -41,3 +41,9 @@ npm unlink daphnis-base-cli
 ```
 ## 构建
 使用 typeScript 的构建能力
+
+## Permission denied 报错
+  - 对某一个文件没有权限, 有两个[解决办法](https://zhuanlan.zhihu.com/p/95148639)
+  - chmod a+x ./文件名  ———— 针对单一文件
+  - sudo chmod -R 777 目录路径  ———— 针对整个目录
+注意: 此方法在 git 看来是改变文件的表现, 但如果用 git 放弃修改, 那么权限会被去掉, 所以只能提交

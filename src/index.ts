@@ -1,10 +1,9 @@
 import { program } from 'commander'
 import create from './order/create'
-const { version } = require('../package.json')
 
 // help
 program
-  .version(version, '-v --version') // 获取 cli 版本
+  .version(require('../package.json').version, '-v --version') // 获取 cli 版本
   .usage('<command> [options]') // 设置帮助信息的首行提示
 
 // 命令

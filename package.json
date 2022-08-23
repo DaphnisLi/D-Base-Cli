@@ -2,14 +2,14 @@
   "name": "daphnis-base-cli",
   "version": "1.2.2",
   "description": "基础项目脚手架",
-  "main": "./lib/index.js",
+  "main": "./dist/index.js",
   "bin": {
     "daphnis-base-cli": "./bin/daphnis-base-cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:comment": "typeScript 基础的构建能力",
-    "build": "rm -rf lib && tsc --build",
+    "build": "rm -rf dist && tsc --build",
     "changelog": "rm -rf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s",
     "commit-lint": "commitlint --from origin/master --to HEAD",
     "release": "./scripts/release.js"
@@ -36,7 +36,7 @@
   "files": [
     "package.json",
     "README.md",
-    "lib"
+    "dist"
   ],
   "license": "ISC",
   "bugs": {

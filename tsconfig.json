@@ -12,7 +12,7 @@
     "stripInternal": true, // 禁用发出@internal在其 JSDoc 注释中的声明
     "pretty": true, // 在 TypeScript 的输出中启用颜色和格式，以使编译器错误更易于阅读
     "declaration": true, // 从项目中的 TypeScript 和 JavaScript 文件生成 .d.ts 文件
-    "outDir": "lib", // 指定构建输出目录
+    "outDir": "dist", // 指定构建输出目录
     "baseUrl": "./", // 解析非相对模块的基地址，默认是当前目录
     "paths": { // 路径映射，相对于baseUrl
       "*": ["src/*"]

@@ -38,9 +38,9 @@ export const getProjectPath = (projectName: string) => {
  * 创建配置文件
  * @param fileName 文件名
  */
-export const createConfigFile = (fileName: string) => {
+export const createConfigFile = (fileName: string, templateName?: string) => {
   try {
-    writeFileSync(`./${fileName}`, template[analyseFileName(fileName)], { encoding: 'utf-8' })
+    writeFileSync(`./${fileName}`, template[templateName || analyseFileName(fileName)], { encoding: 'utf-8' })
   } catch (err) {
     shell.echo(`${red(err)}`)
     shell.echo(`${red(`无法写入 ${fileName} 文件内容`)}`)

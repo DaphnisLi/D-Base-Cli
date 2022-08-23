@@ -3,7 +3,7 @@
  */
 
 import {
-  defaultInstallFeature,
+  initialConfig,
   interactMap,
   interactCommand,
 } from './util'
@@ -25,9 +25,9 @@ const create = async (projecrName: string): Promise<void> => {
   // 初始化项目目录
   initProjectDir(projecrName)
   // 改写项目的 package.json 基本信息
-  writePackage({ name: projecrName })
+  writePackage({ name: projecrName, files: ['package.json', 'README.md', 'dist'] })
   // 安装 feature
-  installFeature(feature, defaultInstallFeature, interactMap)
+  installFeature(feature, initialConfig, interactMap)
   // 结束
   end(projecrName)
 }
