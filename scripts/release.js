@@ -47,7 +47,7 @@ prompt([
   echo('')
 
   echo(yellow('设置 Tag 😁'))
-  exec(`git tag V ${releaseVersion} && git git -c credential.helper= push origin --progress V ${releaseVersion}`)
+  exec(`git tag V${releaseVersion} && git -c credential.helper= push origin --progress V${releaseVersion}`)
   echo('')
 
   echo(yellow('发布 npm 😁'))
