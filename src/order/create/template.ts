@@ -1,4 +1,4 @@
-// 模版 —— 后期放在 github 中, 通过 github 提供的 service 来获取模版, 但是要考虑, 会不会使 cli 执行时间过长
+// 模版
 
 export const Eslintrc = `{
   "env": {
@@ -31,8 +31,7 @@ export const Eslintrc = `{
   }
 }`
 
-export const ReactEslintrc = `
-{
+export const ReactEslintrc = `{
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "jsx": true,
@@ -144,8 +143,7 @@ export const Prettierrc = `{
   endOfLine: 'lf'
 }`
 
-export const Editorconfig = `
-# http://editorconfig.org
+export const Editorconfig = `# http://editorconfig.org
 root = true
 
 [*]
@@ -168,8 +166,7 @@ export const CommitlintConfigJs = `module.exports = {
   },
 }`
 
-export const Gitignore = `
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+export const Gitignore = `# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
@@ -216,8 +213,7 @@ export const TsconfigJson = `{
   "include": ["src/**/*", "tests/**/*"],
 }`
 
-export const Eslintignore = `
-**/*.svg
+export const Eslintignore = `**/*.svg
 package.json
 package-lock.json
 coverage/
@@ -242,8 +238,7 @@ dist/
 lib/
 `
 
-export const TypingsDTs = `
-declare module '*.css';
+export const TypingsDTs = `declare module '*.css';
 declare module '*.less';
 
 declare namespace jest {
@@ -252,16 +247,14 @@ declare namespace jest {
   }
 }
 `
-export const TsconfigBuildJson = `
-{
+export const TsconfigBuildJson = `{
   "extends": "./tsconfig",
   "include": ["src/**/*"],
   "exclude": ["src/**/__demos__/*", "src/**/__tests__/*"]
 }
 `
 
-export const RollupConfigJs = `
-import resolve from '@rollup/plugin-node-resolve'
+export const RollupConfigJs = `import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import { babel } from '@rollup/plugin-babel'
 import { terser } from 'rollup-plugin-terser'
@@ -314,8 +307,7 @@ export default {
 }
 `
 
-export const Babelrc = `
-// Babel 配置
+export const Babelrc = `// Babel 配置
 {
   "presets": [
     "@babel/preset-env",
@@ -338,8 +330,7 @@ export const Babelrc = `
 }
 `
 
-export const ReleaseJs = `
-#!/usr/bin/env node
+export const ReleaseJs = `#!/usr/bin/env node
 
 const { prompt } = require('inquirer')
 const { inc } = require('semver')
@@ -395,8 +386,7 @@ prompt([
 })
 `
 
-export const UmircTs = `
-// config: https://d.umijs.org/config
+export const UmircTs = `// config: https://d.umijs.org/config
 
 import { defineConfig } from 'dumi'
 
@@ -414,15 +404,12 @@ export default defineConfig({
   mfsu: {},
 })
 `
-export const IndexMd = `
-# Hello Jay
+export const IndexMd = `# Hello Jay
 `
 
-export const HelloIndexTs = `
-export const Hello = () => {
+export const HelloIndexTs = `export const Hello = () => {
   return 'Hello'
 }
 `
-export const SrcIndexTs = `
-export * from './Hello'
+export const SrcIndexTs = `export * from './Hello'
 `
