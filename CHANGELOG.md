@@ -1,10 +1,11 @@
-## 1.3.1 (2022-08-26)
+# 1.4.0 (2022-09-05)
 
 
 ### Bug Fixes
 
 * 修复 release 模版错误 ([7ebe356](https://github.com/DaphnisLi/daphnis-base-cli/commit/7ebe35640f8ba9a6091cba070d921c059d3d7d97))
 * 修改 tsconfig.json exclude ([c4b552e](https://github.com/DaphnisLi/daphnis-base-cli/commit/c4b552efae583ffc303e7ddaad46716f2cefd54c))
+* 修改发布脚本错误 ([cb73b1b](https://github.com/DaphnisLi/daphnis-base-cli/commit/cb73b1b44b0d4950f853c8e325b268fd66d5b439))
 * 修改类型及 ts 配置 ([5509992](https://github.com/DaphnisLi/daphnis-base-cli/commit/5509992283f83e70bac46c59777c8b25ffae1079))
 
 
