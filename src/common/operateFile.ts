@@ -4,11 +4,10 @@ import { readFileSync, writeFileSync, existsSync } from 'fs'
 import { resolve } from 'path'
 import * as shell from 'shelljs'
 import { red } from 'chalk'
-import { analyseFileName } from './libs'
-import * as template from '../order/create/template'
+import { PackageJSON } from './types'
 
 /**
- * 读取指定路径下 json 文件
+ * 读取指定路径下 json 文件内容
  * @param filePath json 文件的路径, 这里是相对路径, 相对于项目根目录的路径
  */
 export const readJsonFile = <T>(filePath: string): T => {
@@ -16,7 +15,7 @@ export const readJsonFile = <T>(filePath: string): T => {
 }
 
 /**
- * 覆写指定路径下的 json 文件
+ * 覆写指定路径下的 json 文件内容
  * @param filePath json 文件的路径, 这里是相对路径, 相对于项目根目录的路径
  * @param content  json 内容
  */
@@ -35,30 +34,6 @@ export const getProjectPath = (projectName: string) => {
 }
 
 /**
- * 创建配置文件
- * @param fileName 文件名
- */
-export const createConfigFile = (fileName: string, templateName?: string) => {
-  try {
-    writeFileSync(`./${fileName}`, template[templateName || analyseFileName(fileName)], { encoding: 'utf-8' })
-  } catch (err) {
-    shell.echo(`${red(err)}`)
-    shell.echo(`${red(`无法写入 ${fileName} 文件内容`)}`)
-    shell.echo(`${red(`请在 ${fileName} 中添加以下内容`)}`)
-    shell.echo(`${red(analyseFileName(fileName))}`)
-  }
-}
-
-/**
- * 初始化项目目录
- */
-export const initProjectDir = (projectName: string) => {
-  shell.exec(`mkdir ${projectName}`)
-  shell.cd(projectName)
-  shell.exec('npm init -y') // 初始化 npm
-}
-
-/**
  * 验证当前目录下是否已经存在指定文件，如果存在则退出进行
  * @param filename 文件名
  */
@@ -70,4 +45,43 @@ export const isFileExist = (filename: string) => {
     shell.echo(red(`${file} 已经存在`))
     process.exit(1) // 失败, 退出进程 0 | 1
   }
+}
+
+/**
+ * 初始化项目目录
+ */
+export const initProjectDir = (projectName: string) => {
+  shell.exec(`mkdir ${projectName}`)
+  shell.cd(projectName)
+  shell.exec('git init')
+  shell.exec('npm init -y')
+}
+
+/**
+ * 修改 package 文件
+ *
+ * writePackage('name', 'Daphnis')
+ *
+ * writePackage({ 'name': 'Daphnis', 'version': '1.0.0'  })
+ *
+ * writePackage((packageContent) => {
+ *  packageContent.name = 'Daphnis'
+ *  packageContent.version = '1.0.0'
+ * })
+ */
+export function writePackage (key: keyof PackageJSON, value: string | object): void
+export function writePackage (obj: PackageJSON): void
+export function writePackage (fun: (packageContent: PackageJSON) => void): void
+export function writePackage (param: any, value?: string): void {
+  const packageJson = readJsonFile<PackageJSON>('./package.json')
+  if (typeof param === 'string') {
+    packageJson[param] = value
+  } else if (typeof param === 'object') {
+    for (const key in param) {
+      packageJson[key] = param[key]
+    }
+  } else if (typeof param === 'function') {
+    param(packageJson)
+  }
+  writeJsonFile<PackageJSON>('./package.json', packageJson)
 }

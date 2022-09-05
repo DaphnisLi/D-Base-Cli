@@ -214,25 +214,16 @@ export const TsconfigJson = `{
 }`
 
 export const Eslintignore = `**/*.svg
-package.json
 package-lock.json
 coverage/
-yarn.lock
-netlify.toml
-yarn-error.log
-*.sh
 *.snap
 .gitignore
 .npmignore
-.prettierignore
-.DS_Store
 .editorconfig
 .eslintignore
-**/*.yml
 node_modules/**/*
 **/*.d.ts
 **/*.md
-**/*.less
 config/
 dist/
 lib/
@@ -256,17 +247,19 @@ export const TsconfigBuildJson = `{
 
 export const RollupConfigJs = `import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
-import { babel } from '@rollup/plugin-babel'
 import { terser } from 'rollup-plugin-terser'
 import eslint from '@rollup/plugin-eslint'
 import typescript from '@rollup/plugin-typescript';
-import json from '@rollup/plugin-json'
 import postcss from 'rollup-plugin-postcss'
 
 const commonBundleConfigs = {
   name: 'newProject',
   format: 'umd',
   sourcemap: true,
+  globals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+  },
 }
 
 export default {
@@ -297,36 +290,13 @@ export default {
     }),
     typescript(),
     eslint(),
-    babel({
-      exclude: 'node_modules/**',
-      babelHelpers: 'runtime'
-    }),
     postcss(),
-    json(),
   ],
-}
-`
 
-export const Babelrc = `// Babel 配置
-{
-  "presets": [
-    "@babel/preset-env",
-    "@babel/preset-react",
-    [
-      "@babel/preset-typescript",
-      {
-        "onlyRemoveTypeImports": true
-      }
-    ]
+  external: [
+    'react',
+    'react-dom',
   ],
-  "plugins": [
-    [
-      "@babel/plugin-transform-runtime"
-    ]
-  ],
-  "ignore": [
-    "node_modules/**"
-  ]
 }
 `
 
@@ -404,11 +374,12 @@ export default defineConfig({
   mfsu: {},
 })
 `
+
 export const IndexMd = `# Hello Jay
 `
 
 export const HelloIndexTs = `export const Hello = () => {
-  return 'Hello'
+  return 'Hello Jay'
 }
 `
 export const SrcIndexTs = `export * from './Hello'

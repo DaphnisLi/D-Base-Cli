@@ -1,5 +1,4 @@
 // type
-import { Interact, Feature } from '../order/create/constants'
 
 export interface PackageJSON {
   name?: string
@@ -37,26 +36,20 @@ export interface ScriptsCommand {
   command: string
 }
 
-interface ChoicesType {
-  name: Feature
-  value: Feature
+interface Choices {
+  name: string
+  value: string
 }
 
-export interface InteractCommandType {
-  name: Interact
-  type: string
+export interface InteractOption<T> {
+  name: T
+  type: InteractOptionType
   message: string
-  choices?: ChoicesType[]
-}
-
-export interface FeatSelectResult {
-  [Interact.STANDARD]: Feature[]
-  [Interact.TYPESCRIPT]: boolean
-  [Interact.REACT]: boolean
+  choices?: Choices[]
 }
 
 // 这个 enum 还是和 type 有关的。还有其他的选项, 暂时用不到, 就不加了
-export enum Interacttype {
+export enum InteractOptionType {
   INPUT = 'input',
   NUMBER = 'number',
   CONFIRM = 'confirm', // 是否

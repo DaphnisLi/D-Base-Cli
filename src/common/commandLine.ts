@@ -7,8 +7,7 @@ import {
   green,
   blue,
 } from 'chalk'
-import { Feature, Interact } from '../order/create/constants'
-import { FeatSelectResult, InteractCommandType } from './types'
+import { InteractOption } from './types'
 import { prompt } from 'inquirer'
 
 /**
@@ -23,7 +22,7 @@ export const end = (projectName: string) => {
  * @param name 功能名
  * 如果需要添加新类型
  */
-export const installPoint = (featureName: Feature | string) => {
+export const installPoint = (featureName: string) => {
   const start = () => {
     shell.echo(yellow(`开始安装 ${featureName} 🙄️`))
     shell.echo('')
@@ -36,9 +35,9 @@ export const installPoint = (featureName: Feature | string) => {
 }
 
 /**
- * 交互式命令行
+ * 交互式命令行 —— 选择功能
  */
-export const selectFeature = async (interactCommand: InteractCommandType[]): Promise<FeatSelectResult> => {
+export const selectFeature = async <F, S>(interactOption: InteractOption<F>[]): Promise<S> => {
   // 清空命令行
   clear()
   // 输出信息
@@ -47,24 +46,28 @@ export const selectFeature = async (interactCommand: InteractCommandType[]): Pro
   shell.echo('开始初始化项目')
   shell.echo('')
 
-  return await prompt(interactCommand)
+  return await prompt(interactOption)
 }
 
 /**
  * 安装用户选择的功能
  * @param feature 功能列表
  */
-export const installFeature = (feature: FeatSelectResult, initialConfig: () => void, interactMap: {
-  [key in Interact]: (interactResult: any) => void
-}) => {
+export const installFeature = <S>(
+  interactMap: {
+    [x: string]: (selectResult: S) => void
+  },
+  selectResult: S,
+  defaultConfig: () => void,
+) => {
   shell.echo(green('开始安装所选功能 😁'))
   shell.echo('')
   shell.echo(yellow('过程可能会有些慢呦... 🙄️'))
   shell.echo('')
 
-  initialConfig()
+  defaultConfig()
 
-  for (const key in feature) {
-    interactMap[key](feature)
+  for (const key in selectResult) {
+    interactMap[key](selectResult)
   }
 }

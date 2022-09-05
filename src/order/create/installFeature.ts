@@ -1,26 +1,25 @@
 // 各个功能的安装方法
 
 import * as shell from 'shelljs'
-import { createConfigFile } from '../../common/operateFile'
-import { writePackage } from '../../common/operateFileContent'
+import { writePackage } from '../../common/operateFile'
 import { installPoint } from '../../common/commandLine'
-import { Feature, Interact } from './constants'
+import { Feature, StandardOption, SelectResult, ReactOption } from './types'
 import { yellow } from 'chalk'
-import { FeatSelectResult } from '../../common/types'
+import { createConfigFile } from './util'
 
 /**
  * CheckBox 退出安装
- * @param featureList 交互名
- * @param feature checkbox 具体的功能名
+ * @param standardOptionList 功能名
+ * @param standardOption checkbox 具体的功能名
  */
-const isQuitInstall = (featureList: Feature[], feature: Feature) => !featureList.some(item => item === feature)
+const isQuitInstall = (standardOptionList: StandardOption[], standardOption: StandardOption) => !standardOptionList.some(item => item === standardOption)
 
 /**
  * 安装 Changelog
  */
-export const installChangelog = (featSelectResult: FeatSelectResult) => {
-  if (isQuitInstall(featSelectResult[Interact.STANDARD], Feature.CHANGELOG)) return
-  const [start, success] = installPoint(Feature.CHANGELOG)
+export const installChangelog = (selectResult: SelectResult) => {
+  if (isQuitInstall(selectResult[Feature.STANDARD], StandardOption.CHANGELOG)) return
+  const [start, success] = installPoint(StandardOption.CHANGELOG)
   start()
   shell.exec('npm i @nicecode/changelog conventional-changelog-cli -D')
 
@@ -43,19 +42,19 @@ const installESLintPlugins = () => {
 /**
  * 安装 ESLint
  */
-export const installESLint = (featSelectResult: FeatSelectResult) => {
-  if (isQuitInstall(featSelectResult[Interact.STANDARD], Feature.ESLINT)) return
+export const installESLint = (selectResult: SelectResult) => {
+  if (isQuitInstall(selectResult[Feature.STANDARD], StandardOption.ESLINT)) return
 
-  const [start, success] = installPoint(Feature.ESLINT)
+  const [start, success] = installPoint(StandardOption.ESLINT)
   start()
   shell.exec('npm i @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint standard -D')
 
   // 安装了 React, 就要安装 React 对应的 ESLint
-  createConfigFile('.eslintrc', featSelectResult.react && 'ReactEslintrc')
-  featSelectResult.react && installESLintPlugins()
+  createConfigFile('.eslintrc', selectResult[Feature.REACT] && 'ReactEslintrc')
+  selectResult[Feature.REACT] && installESLintPlugins()
   createConfigFile('.eslintignore')
 
-  const isInstallStyleEslint = featSelectResult[Interact.STANDARD].includes(Feature.STYLELINT)
+  const isInstallStyleEslint = selectResult[Feature.STANDARD].includes(StandardOption.STYLELINT)
   writePackage(c => {
     c.scripts = {
       ...c.scripts,
@@ -69,10 +68,10 @@ export const installESLint = (featSelectResult: FeatSelectResult) => {
 /**
  * 安装 Stylelint
  */
-export const installStylelint = (featSelectResult: FeatSelectResult) => {
-  if (isQuitInstall(featSelectResult[Interact.STANDARD], Feature.STYLELINT)) return
+export const installStylelint = (selectResult: SelectResult) => {
+  if (isQuitInstall(selectResult[Feature.STANDARD], StandardOption.STYLELINT)) return
 
-  const [start, success] = installPoint(Feature.STYLELINT)
+  const [start, success] = installPoint(StandardOption.STYLELINT)
   start()
   shell.exec('npm i stylelint stylelint-config-standard -D')
   createConfigFile('.stylelintrc')
@@ -83,10 +82,10 @@ export const installStylelint = (featSelectResult: FeatSelectResult) => {
  * 安装 Prettier
  * 虽然我不用这个功能, 但我也要提供一下
  */
-export const installPrettier = (featSelectResult: FeatSelectResult) => {
-  if (isQuitInstall(featSelectResult[Interact.STANDARD], Feature.PRETTIER)) return
+export const installPrettier = (selectResult: SelectResult) => {
+  if (isQuitInstall(selectResult[Feature.STANDARD], StandardOption.PRETTIER)) return
 
-  const [start, success] = installPoint(Feature.PRETTIER)
+  const [start, success] = installPoint(StandardOption.PRETTIER)
   start()
   shell.exec('npm i prettier -D')
   createConfigFile('.prettierrc')
@@ -103,10 +102,10 @@ export const installPrettier = (featSelectResult: FeatSelectResult) => {
 /**
  * 安装 Editorconfig
  */
-export const installEditorconfig = (featSelectResult: FeatSelectResult) => {
-  if (isQuitInstall(featSelectResult[Interact.STANDARD], Feature.EDITORCONFIG)) return
+export const installEditorconfig = (selectResult: SelectResult) => {
+  if (isQuitInstall(selectResult[Feature.STANDARD], StandardOption.EDITORCONFIG)) return
 
-  const [start, success] = installPoint(Feature.EDITORCONFIG)
+  const [start, success] = installPoint(StandardOption.EDITORCONFIG)
   start()
   createConfigFile('.editorconfig')
   success()
@@ -115,9 +114,9 @@ export const installEditorconfig = (featSelectResult: FeatSelectResult) => {
 /**
  * 安装 Husky
  */
-export const installHusky = (featSelectResult: FeatSelectResult) => {
-  const lint = [Feature.COMMITLINT, Feature.COMMITCHECKESLINT]
-  const isInstallHusky = featSelectResult[Interact.STANDARD].some(item => lint.includes(item))
+export const installHusky = (selectResult: SelectResult) => {
+  const lint = [StandardOption.COMMITLINT, StandardOption.COMMITCHECKESLINT]
+  const isInstallHusky = selectResult[Feature.STANDARD].some(item => lint.includes(item))
   if (!isInstallHusky) return
 
   shell.exec('npm i husky -D')
@@ -128,10 +127,10 @@ export const installHusky = (featSelectResult: FeatSelectResult) => {
  * Commitlint
  * push 时检查 commitMessage 是否 符合规范
  */
-export const installCommitlint = (featSelectResult: FeatSelectResult) => {
-  if (isQuitInstall(featSelectResult[Interact.STANDARD], Feature.COMMITLINT)) return
+export const installCommitlint = (selectResult: SelectResult) => {
+  if (isQuitInstall(selectResult[Feature.STANDARD], StandardOption.COMMITLINT)) return
 
-  const [start, success] = installPoint(Feature.COMMITLINT)
+  const [start, success] = installPoint(StandardOption.COMMITLINT)
   start()
   shell.exec('npm i @commitlint/cli @commitlint/config-conventional -D')
   shell.exec('npx husky add .husky/pre-push "npm run commit-lint" ')
@@ -176,10 +175,10 @@ const installLintStaged = () => {
  * CommitCheckESLint
  * commit 时检查 eslint、stylelint
  */
-export const installCommitCheckESLint = (featSelectResult: FeatSelectResult) => {
-  if (isQuitInstall(featSelectResult[Interact.STANDARD], Feature.COMMITCHECKESLINT)) return
+export const installCommitCheckESLint = (selectResult: SelectResult) => {
+  if (isQuitInstall(selectResult[Feature.STANDARD], StandardOption.COMMITCHECKESLINT)) return
 
-  const [start, success] = installPoint(Feature.COMMITCHECKESLINT)
+  const [start, success] = installPoint(StandardOption.COMMITCHECKESLINT)
   start()
   installLintStaged()
 
@@ -187,7 +186,7 @@ export const installCommitCheckESLint = (featSelectResult: FeatSelectResult) => 
     '*.{jsx,js,ts,tsx}': ['eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx'],
   })
 
-  featSelectResult[Interact.STANDARD].includes(Feature.STYLELINT) && installCommitCheckStylelint()
+  selectResult[Feature.STANDARD].includes(StandardOption.STYLELINT) && installCommitCheckStylelint()
   success()
 }
 
@@ -217,9 +216,8 @@ export const installTypesNode = () => {
 /**
  * git 初始化
  */
-export const initRepository = () => {
-  shell.echo(yellow('git 初始化'))
-  shell.exec('git init')
+export const installGitignore = () => {
+  shell.echo(yellow('创建 .gitignore'))
   createConfigFile('.gitignore')
   shell.touch('README.md')
 }
@@ -259,7 +257,7 @@ export const installReact = () => {
  * 安装 Rollup plugins
  */
 const installRollupPlugins = () => {
-  shell.exec('npm i rollup-plugin-postcss rollup-plugin-terser @rollup/plugin-babel @rollup/plugin-commonjs @rollup/plugin-eslint @rollup/plugin-json @rollup/plugin-node-resolve @rollup/plugin-typescript -D')
+  shell.exec('npm i rollup-plugin-postcss rollup-plugin-terser @rollup/plugin-commonjs @rollup/plugin-eslint @rollup/plugin-node-resolve @rollup/plugin-typescript -D')
 }
 
 /**
@@ -290,7 +288,7 @@ const defaultRollup = () => {
  * 安装 Rollup
  */
 export const installRollup = () => {
-  const [start, success] = installPoint(Feature.ROLLUP)
+  const [start, success] = installPoint(ReactOption.ROLLUP)
   start()
   shell.exec('npm i rollup -D')
   defaultRollup()
@@ -303,17 +301,6 @@ export const installRollup = () => {
       build: 'rm -rf dist && tsc -p ./tsconfig.build.json && rollup --config',
     }
   })
-  success()
-}
-
-/**
- * 安装 Babel
- */
-export const installBabel = () => {
-  const [start, success] = installPoint(Feature.BABEL)
-  start()
-  shell.exec('npm i @babel/core @babel/plugin-transform-runtime @babel/preset-env @babel/preset-react @babel/preset-typescript -D')
-  createConfigFile('.babelrc')
   success()
 }
 
