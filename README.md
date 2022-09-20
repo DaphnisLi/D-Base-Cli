@@ -9,7 +9,7 @@ https://www.npmjs.com/package/daphnis-base-cli
 npx daphnis-base-cli newProject
 ```
 
-## [依赖解释](./DEPENDENCIES.md)
+## [依赖解释](./Docs/DEPENDENCIES.md)
 
 ## 关联 git 远端仓库
 ```
