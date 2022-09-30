@@ -1,3 +1,12 @@
+# 1.5.0 (2022-09-30)
+
+
+### Features
+
+* 填入远端仓库地址，直接创建项目 ([94c20a2](https://github.com/DaphnisLi/daphnis-base-cli/commit/94c20a28bf1e32fba504e46047ef2560c3c0fc6e))
+
+
+
 # 1.4.0 (2022-09-05)
 
 
