@@ -20,11 +20,12 @@ import {
 } from './installFeature'
 import { StandardOption, Feature, SelectResult } from './types'
 import { InteractOption, InteractOptionType } from '../../common/types'
-import { analyseFileName } from '../../common/libs'
+import { analyseFileName, getRepositoryName } from '../../common/libs'
 import * as template from './template'
 import { writeFileSync } from 'fs'
 import * as shell from 'shelljs'
 import { red } from 'chalk'
+import { writePackage } from '../../common/operateFile'
 
 /**
  * 创建配置文件
@@ -43,12 +44,23 @@ export const createConfigFile = (fileName: string, templateName?: string) => {
 }
 
 /**
- * 初始化配置
+ * 安装前配置
  */
-export const defaultConfig = () => {
-  installGitignore()
+export const configBeforeInstall = (selectResult: SelectResult) => {
+  const projecrName = getRepositoryName(selectResult[Feature.REPOSITORY_URL])
+
+  // 改写项目的 package.json 基本信息
+  writePackage({ name: projecrName, files: ['package.json', 'README.md', 'dist'] })
   installTypesNode()
-  installRelease()
+}
+
+/**
+ * 结束前配置
+ */
+
+export const configBeforeEnd = (selectResult: SelectResult) => {
+  mkdirSrc(selectResult)
+  installGitignore()
 }
 
 const handleInstallDumi = (selectResult: SelectResult) => {
@@ -60,7 +72,6 @@ const handleInstallReact = (selectResult: SelectResult) => {
   if (!selectResult[Feature.REACT]) return
   installReact()
   installRollup()
-  mkdirSrc()
 }
 
 const handleInstallTypeScript = (selectResult: SelectResult) => {
@@ -79,20 +90,31 @@ const handleInstallStandard = (selectResult: SelectResult) => {
   installCommitCheckESLint(selectResult)
 }
 
+const handleInstallReleaseScript = (selectResult: SelectResult) => {
+  if (!selectResult[Feature.RELEASE_SESCRIPT]) return
+  installRelease()
+}
+
 /**
  * 交互处理函数集合
  */
-export const interactMap: { [key in Feature]: (selectResult: SelectResult) => void } = {
+export const interactMap: Partial<{ [key in Feature]: (selectResult: SelectResult) => void }> = {
   [Feature.DUMI]: handleInstallDumi,
   [Feature.REACT]: handleInstallReact,
   [Feature.TYPESCRIPT]: handleInstallTypeScript,
   [Feature.STANDARD]: handleInstallStandard,
+  [Feature.RELEASE_SESCRIPT]: handleInstallReleaseScript,
 }
 
 /**
  * 交互命令
  */
 export const interactOption: InteractOption<Feature>[] = [
+  {
+    name: Feature.REPOSITORY_URL,
+    type: InteractOptionType.INPUT,
+    message: '远端仓库地址',
+  },
   {
     name: Feature.DUMI,
     type: InteractOptionType.CONFIRM,
@@ -121,5 +143,10 @@ export const interactOption: InteractOption<Feature>[] = [
       { name: StandardOption.COMMITLINT, value: StandardOption.COMMITLINT },
       { name: StandardOption.COMMITCHECKESLINT, value: StandardOption.COMMITCHECKESLINT },
     ],
+  },
+  {
+    name: Feature.RELEASE_SESCRIPT,
+    type: InteractOptionType.CONFIRM,
+    message: '是否安装发布脚本',
   },
 ]

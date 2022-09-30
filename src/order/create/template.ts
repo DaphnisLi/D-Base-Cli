@@ -29,7 +29,8 @@ export const Eslintrc = `{
     "camelcase": "off",
     "no-use-before-define": "off"
   }
-}`
+}
+`
 
 export const ReactEslintrc = `{
   "parser": "@typescript-eslint/parser",
@@ -99,7 +100,8 @@ export const ReactEslintrc = `{
       }
     }
   ]
-}`
+}
+`
 
 export const Stylelintrc = `{
   "extends": "stylelint-config-standard",
@@ -120,7 +122,8 @@ export const Stylelintrc = `{
     "**/*.jsx",
     "**/*.snap"
   ]
-}`
+}
+`
 
 export const Prettierrc = `{
   printWidth: 80,
@@ -141,7 +144,8 @@ export const Prettierrc = `{
   proseWrap: 'preserve',
   htmlWhitespaceSensitivity: 'css',
   endOfLine: 'lf'
-}`
+}
+`
 
 export const Editorconfig = `# http://editorconfig.org
 root = true
@@ -164,7 +168,8 @@ export const CommitlintConfigJs = `module.exports = {
       ['lower-case', 'camel-case', 'snake-case', 'kebab-case', 'sentence-case', 'start-case', 'pascal-case', 'upper-case'],
     ],
   },
-}`
+}
+`
 
 export const Gitignore = `# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
@@ -211,7 +216,8 @@ export const TsconfigJson = `{
     }
   },
   "include": ["src/**/*", "tests/**/*"],
-}`
+}
+`
 
 export const Eslintignore = `**/*.svg
 package-lock.json

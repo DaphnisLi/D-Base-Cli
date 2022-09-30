@@ -12,3 +12,9 @@ export const capitalLetters = (word: string) => word.replace(word.slice(0, 1), w
  * commitlint.config.js => CommitlintConfigJs
  */
 export const analyseFileName = (fileName: string) => fileName.split('.').filter(item => item).map(item => capitalLetters(item)).join('')
+
+/**
+ *  获取 Git 仓库名
+ * @param repositoryUrl Git 远端仓库 Url
+ */
+export const getRepositoryName = (repositoryUrl: string) => repositoryUrl.split('/').slice(-1)[0].split('.')[0]

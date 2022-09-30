@@ -2,10 +2,12 @@
 
 // 要安装的功能
 export enum Feature {
-  STANDARD = 'Standard',
-  TYPESCRIPT = 'TypeScript',
+  REPOSITORY_URL = 'RepositoryUrl',
+  DUMI = 'Dumi',
   REACT = 'React',
-  DUMI = 'Dumi'
+  TYPESCRIPT = 'TypeScript',
+  STANDARD = 'Standard',
+  RELEASE_SESCRIPT = 'ReleaseScript'
 }
 
 // Standard

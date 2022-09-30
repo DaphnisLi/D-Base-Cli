@@ -342,7 +342,8 @@ export const installDumi = () => {
 /**
  * 新建 src 目录
  */
-export const mkdirSrc = () => {
+export const mkdirSrc = (selectResult: SelectResult) => {
+  if (!selectResult[Feature.REACT] && !selectResult[Feature.TYPESCRIPT]) return
   shell.mkdir('src')
   shell.cd('src')
   createConfigFile('index.md')

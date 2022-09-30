@@ -8,11 +8,11 @@ program
 
 // 命令
 program
-  .command('create <app-name>') // 设置命令 <> 里的是必选参数
-  .description('新建项目请执行: daphnis-base-cli create appName')
-  .action(async (appName: string) => {
+  .command('create') // 设置命令 <> 里的是必选参数
+  .description('新建项目请执行: daphnis-base-cli create')
+  .action(async () => {
     // create 命令的主要逻辑
-    await create(appName)
+    await create()
   })
 
 // process.argv 终端输入的命令

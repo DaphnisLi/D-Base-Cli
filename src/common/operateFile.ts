@@ -3,7 +3,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs'
 import { resolve } from 'path'
 import * as shell from 'shelljs'
-import { red } from 'chalk'
+import { red, yellow, green } from 'chalk'
 import { PackageJSON } from './types'
 
 /**
@@ -51,10 +51,19 @@ export const isFileExist = (filename: string) => {
  * 初始化项目目录
  */
 export const initProjectDir = (projectName: string) => {
-  shell.exec(`mkdir ${projectName}`)
   shell.cd(projectName)
   shell.exec('git init')
   shell.exec('npm init -y')
+}
+
+/**
+ * 初始化 Git 仓库
+ */
+export const initRepository = (repositoryUrl: string, projecrName: string) => {
+  shell.echo(yellow('开始克隆仓库 🙄️'))
+  shell.exec(`git clone ${repositoryUrl}`)
+  initProjectDir(projecrName)
+  shell.echo(green('克隆仓库成功 😁'))
 }
 
 /**

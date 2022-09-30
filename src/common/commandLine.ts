@@ -58,16 +58,13 @@ export const installFeature = <S>(
     [x: string]: (selectResult: S) => void
   },
   selectResult: S,
-  defaultConfig: () => void,
 ) => {
   shell.echo(green('开始安装所选功能 😁'))
   shell.echo('')
   shell.echo(yellow('过程可能会有些慢呦... 🙄️'))
   shell.echo('')
 
-  defaultConfig()
-
-  for (const key in selectResult) {
+  for (const key in interactMap) {
     interactMap[key](selectResult)
   }
 }
