@@ -1,6 +1,6 @@
 {
   "name": "daphnis-base-cli",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "基础项目脚手架",
   "main": "./dist/index.js",
   "bin": {

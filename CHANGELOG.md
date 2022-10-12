@@ -1,3 +1,12 @@
+## 1.5.1 (2022-10-12)
+
+
+### Bug Fixes
+
+* 修改 rollup 配置、修改 TypeScript 配置 ([8423ddc](https://github.com/DaphnisLi/daphnis-base-cli/commit/8423ddcc523d377e8c153f2b43650d352dead03b))
+
+
+
 # 1.5.0 (2022-09-30)
 
 
