@@ -207,12 +207,10 @@ export const TsconfigJson = `{
     "strict": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "outDir": "./dist",
-    "declaration": true,
-    "declarationDir": "./dist",
+    "rootDir": "./",
+    "baseUrl": "./src",
     "paths": {
-      "newProject": ["./src"],
+      "newProject": ["."],
     }
   },
   "include": ["src/**/*", "tests/**/*"],
@@ -247,6 +245,12 @@ declare namespace jest {
 export const TsconfigBuildJson = `{
   "extends": "./tsconfig",
   "include": ["src/**/*"],
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "./src"
+  },
   "exclude": ["src/**/__demos__/*", "src/**/__tests__/*"]
 }
 `
@@ -254,7 +258,6 @@ export const TsconfigBuildJson = `{
 export const RollupConfigJs = `import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
-import eslint from '@rollup/plugin-eslint'
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss'
 
@@ -295,7 +298,6 @@ export default {
       include: /node_modules/,
     }),
     typescript(),
-    eslint(),
     postcss(),
   ],
 

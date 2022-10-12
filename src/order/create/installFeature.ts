@@ -257,7 +257,7 @@ export const installReact = () => {
  * 安装 Rollup plugins
  */
 const installRollupPlugins = () => {
-  shell.exec('npm i rollup-plugin-postcss rollup-plugin-terser @rollup/plugin-commonjs @rollup/plugin-eslint @rollup/plugin-node-resolve @rollup/plugin-typescript -D')
+  shell.exec('npm i rollup-plugin-postcss rollup-plugin-terser @rollup/plugin-commonjs @rollup/plugin-node-resolve @rollup/plugin-typescript -D')
 }
 
 /**
