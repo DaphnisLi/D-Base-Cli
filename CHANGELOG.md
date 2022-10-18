@@ -1,3 +1,12 @@
+## 1.5.4 (2022-10-18)
+
+
+### Features
+
+* 调整 react 依赖 ([2dff68d](https://github.com/DaphnisLi/daphnis-base-cli/commit/2dff68d541ab7a482b57ed94bb64862adfffd61e))
+
+
+
 ## 1.5.3 (2022-10-18)
 
 
