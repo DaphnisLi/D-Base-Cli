@@ -267,7 +267,6 @@ const commonBundleConfigs = {
   sourcemap: true,
   globals: {
     react: 'React',
-    'react-dom': 'ReactDOM',
   },
 }
 
