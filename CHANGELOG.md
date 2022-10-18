@@ -1,3 +1,12 @@
+## 1.5.3 (2022-10-18)
+
+
+### Bug Fixes
+
+* 修改 react-dom ([2a4e217](https://github.com/DaphnisLi/daphnis-base-cli/commit/2a4e217fc51209e659794e784473fcbfb7ac3ade))
+
+
+
 ## 1.5.2 (2022-10-18)
 
 
