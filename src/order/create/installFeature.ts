@@ -239,16 +239,14 @@ export const installTypeScript = () => {
 export const installReact = () => {
   const [start, success] = installPoint(Feature.REACT)
   start()
-  shell.exec('npm i react@16 react-dom@16 -S') // 最好是安装在 peerDependencies 中, 因为基础包不需要用 react, 用宿主环境的即可
+  shell.exec('npm i react@16 -S') // 最好是安装在 peerDependencies 中, 因为基础包不需要用 react, 用宿主环境的即可
 
   writePackage(c => {
     c.peerDependencies = {
       ...c?.peerDependencies,
-      react: c.dependencies.react,
-      'react-dom': c.dependencies['react-dom'],
+      react: '^16.8.0 || ^17.0.0 || ^18.0.0',
     }
     delete c.dependencies.react
-    delete c.dependencies['react-dom']
   })
   success()
 }
