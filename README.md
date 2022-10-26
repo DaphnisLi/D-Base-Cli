@@ -1,12 +1,12 @@
-# daphnis-base-cli
+# d-base-cli
 基础项目脚手架
 
 ## NPM 地址
-https://www.npmjs.com/package/daphnis-base-cli
+https://www.npmjs.com/package/d-base-cli
 
 ## 使用
 ```
-npx daphnis-base-cli create
+npx d-base-cli create
 ```
 
 ## [依赖解释](./Docs/DEPENDENCIES.md)
@@ -19,9 +19,9 @@ npm run build
 npm link
 
 卸载 link
-npm unlink daphnis-base-cli
+npm unlink d-base-cli
 
-每次改完代码都要 build, 因为 daphnis-base-cli.js 中 import('../lib')
+每次改完代码都要 build, 因为 d-base-cli.js 中 import('../lib')
 ```
 
 ## 发布

@@ -1,10 +1,10 @@
 {
-  "name": "daphnis-base-cli",
-  "version": "1.5.4",
+  "name": "@daphnis/d-base-cli",
+  "version": "2.0.0",
   "description": "基础项目脚手架",
   "main": "./dist/index.js",
   "bin": {
-    "daphnis-base-cli": "./bin/daphnis-base-cli.js"
+    "d-base-cli": "./bin/d-base-cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DaphnisLi/daphnis-base-cli.git"
+    "url": "git+https://github.com/DaphnisLi/d-base-cli.git"
   },
   "author": "Daphnis",
   "keywords": [
@@ -40,9 +40,9 @@
   ],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DaphnisLi/daphnis-base-cli/issues"
+    "url": "https://github.com/DaphnisLi/d-base-cli/issues"
   },
-  "homepage": "https://github.com/DaphnisLi/daphnis-base-cli#readme",
+  "homepage": "https://github.com/DaphnisLi/d-base-cli#readme",
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",

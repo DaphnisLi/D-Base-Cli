@@ -9,7 +9,7 @@ program
 // 命令
 program
   .command('create') // 设置命令 <> 里的是必选参数
-  .description('新建项目请执行: daphnis-base-cli create')
+  .description('新建项目请执行: d-base-cli create')
   .action(async () => {
     // create 命令的主要逻辑
     await create()

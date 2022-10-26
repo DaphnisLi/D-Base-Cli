@@ -42,7 +42,7 @@ export const selectFeature = async <F, S>(interactOption: InteractOption<F>[]): 
   clear()
   // 输出信息
   /* eslint-disable @typescript-eslint/no-var-requires */
-  shell.echo(blue(`DAPHNIS-BASE-CLI V ${require('../../package.json').version}`))
+  shell.echo(blue(`D-BASE-CLI V ${require('../../package.json').version}`))
   shell.echo('开始初始化项目')
   shell.echo('')
 
