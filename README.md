@@ -21,7 +21,7 @@ npm link
 卸载 link
 npm unlink d-base-cli
 
-每次改完代码都要 build, 因为 d-base-cli.js 中 import('../lib')
+每次改完代码都要 build, 因为 d-base-cli.js 中 import('../dist/index.js')
 ```
 
 ## 发布
