@@ -1,6 +1,6 @@
 {
   "name": "@daphnis/d-base-cli",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "基础项目脚手架",
   "main": "./dist/index.js",
   "bin": {
