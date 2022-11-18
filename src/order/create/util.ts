@@ -8,8 +8,6 @@ import {
   installEditorconfig,
   installTypesNode,
   installHusky,
-  installCommitCheckESLint,
-  installCommitlint,
   installGitignore,
   installTypeScript,
   installReact,
@@ -86,8 +84,6 @@ const handleInstallStandard = (selectResult: SelectResult) => {
   installStylelint(selectResult)
   installPrettier(selectResult)
   installEditorconfig(selectResult)
-  installCommitlint(selectResult)
-  installCommitCheckESLint(selectResult)
 }
 
 const handleInstallReleaseScript = (selectResult: SelectResult) => {
@@ -140,8 +136,7 @@ export const interactOption: InteractOption<Feature>[] = [
       { name: StandardOption.STYLELINT, value: StandardOption.STYLELINT },
       { name: StandardOption.PRETTIER, value: StandardOption.PRETTIER },
       { name: StandardOption.EDITORCONFIG, value: StandardOption.EDITORCONFIG },
-      { name: StandardOption.COMMITLINT, value: StandardOption.COMMITLINT },
-      { name: StandardOption.COMMITCHECKESLINT, value: StandardOption.COMMITCHECKESLINT },
+      { name: StandardOption.PUSHLINT, value: StandardOption.PUSHLINT },
     ],
   },
   {

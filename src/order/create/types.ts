@@ -17,8 +17,7 @@ export enum StandardOption {
   STYLELINT = 'Stylelint',
   PRETTIER = 'Prettier',
   EDITORCONFIG = 'Editorconfig',
-  COMMITLINT = 'Commitlint',
-  COMMITCHECKESLINT = 'CommitCheckESLint',
+  PUSHLINT = 'Pushlint',
 }
 
 // React

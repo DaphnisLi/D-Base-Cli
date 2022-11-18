@@ -58,8 +58,8 @@ export const installESLint = (selectResult: SelectResult) => {
   writePackage(c => {
     c.scripts = {
       ...c.scripts,
-      lint: `eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src${isInstallStyleEslint ? ' && stylelint ./src' : ''}`,
-      'lint-fix': `eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src --fix${isInstallStyleEslint ? ' && stylelint ./src --fix' : ''}`,
+      lint: `eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src${isInstallStyleEslint ? " && stylelint 'src/**/*.(jsx|tsx|css|less)'" : ''}`,
+      'lint-fix': `eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src --fix${isInstallStyleEslint ? " && stylelint 'src/**/*.(jsx|tsx|css|less)' --fix" : ''}`,
     }
   })
   success()
@@ -115,8 +115,7 @@ export const installEditorconfig = (selectResult: SelectResult) => {
  * 安装 Husky
  */
 export const installHusky = (selectResult: SelectResult) => {
-  const lint = [StandardOption.COMMITLINT, StandardOption.COMMITCHECKESLINT]
-  const isInstallHusky = selectResult[Feature.STANDARD].some(item => lint.includes(item))
+  const isInstallHusky = selectResult[Feature.STANDARD].some(item => item === StandardOption.PUSHLINT)
   if (!isInstallHusky) return
 
   shell.exec('npm i husky -D')
@@ -124,82 +123,27 @@ export const installHusky = (selectResult: SelectResult) => {
 }
 
 /**
- * Commitlint
- * push 时检查 commitMessage 是否 符合规范
+ * Pushlint
+ * push 时检查 commitMessage、lint
  */
-export const installCommitlint = (selectResult: SelectResult) => {
-  if (isQuitInstall(selectResult[Feature.STANDARD], StandardOption.COMMITLINT)) return
+export const installPushlint = (selectResult: SelectResult) => {
+  if (isQuitInstall(selectResult[Feature.STANDARD], StandardOption.PUSHLINT)) return
 
-  const [start, success] = installPoint(StandardOption.COMMITLINT)
+  const [start, success] = installPoint(StandardOption.PUSHLINT)
   start()
   shell.exec('npm i @commitlint/cli @commitlint/config-conventional -D')
   shell.exec('npx husky add .husky/pre-push "npm run commit-lint" ')
+  shell.exec('npx husky add .husky/pre-push "npm run lint" ')
 
   writePackage(c => {
     c.scripts = {
       ...c.scripts,
       'commit-lint': 'commitlint --from origin/master --to HEAD',
     }
-    c.husky = {
-      ...c.husky,
-      hooks: {
-        ...c.husky?.hooks,
-        'pre-push': 'npm run commit-lint',
-      },
-    }
   })
 
   createConfigFile('commitlint.config.js')
   success()
-}
-
-/**
- * 安装 lint-staged
- */
-const installLintStaged = () => {
-  shell.exec('npm i lint-staged -D')
-  shell.exec('npx husky add .husky/pre-commit "npx lint-staged" ')
-
-  writePackage(c => {
-    c.husky = {
-      ...c.husky,
-      hooks: {
-        ...c.husky.hooks,
-        'pre-commit': 'lint-staged',
-      },
-    }
-  })
-}
-
-/**
- * CommitCheckESLint
- * commit 时检查 eslint、stylelint
- */
-export const installCommitCheckESLint = (selectResult: SelectResult) => {
-  if (isQuitInstall(selectResult[Feature.STANDARD], StandardOption.COMMITCHECKESLINT)) return
-
-  const [start, success] = installPoint(StandardOption.COMMITCHECKESLINT)
-  start()
-  installLintStaged()
-
-  writePackage('lint-staged', {
-    '*.{jsx,js,ts,tsx}': ['eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx'],
-  })
-
-  selectResult[Feature.STANDARD].includes(StandardOption.STYLELINT) && installCommitCheckStylelint()
-  success()
-}
-
-/**
- * commit 时检查 styleLint
- */
-const installCommitCheckStylelint = () => {
-  writePackage(c => {
-    c['lint-staged'] = {
-      ...c['lint-staged'],
-      '*.{css,scss,less}': ['stylelint'],
-    }
-  })
 }
 
 /**
@@ -239,14 +183,14 @@ export const installTypeScript = () => {
 export const installReact = () => {
   const [start, success] = installPoint(Feature.REACT)
   start()
-  shell.exec('npm i react -S') // 最好是安装在 peerDependencies 中, 因为基础包不需要用 react, 用宿主环境的即可
+  // 为什么要将 react 安装在 devDependencies ? 因为本地开发还是需要 react 的
+  shell.exec('npm i react -D') // 最好是安装在 peerDependencies 中, 因为基础包不需要用 react, 用宿主环境的即可
 
   writePackage(c => {
     c.peerDependencies = {
       ...c?.peerDependencies,
       react: '>=16.8.0',
     }
-    delete c.dependencies.react
   })
   success()
 }

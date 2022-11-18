@@ -213,7 +213,7 @@ export const TsconfigJson = `{
       "newProject": ["."],
     }
   },
-  "include": ["src/**/*", "tests/**/*"],
+  "include": ["src/**/*", "tests/**/*", "./typings.d.ts"],
 }
 `
 
@@ -233,14 +233,18 @@ dist/
 lib/
 `
 
-export const TypingsDTs = `declare module '*.css';
-declare module '*.less';
+export const TypingsDTs = `// 声明全局类型
+// import { LoDashStatic } from 'lodash'
 
-declare namespace jest {
-  interface Matchers<R> {
-    toMatchRenderedSnapshot(): R
-  }
-}
+// 作用于 import styles from '*.css', 不然会报错
+declare module '*.less'
+declare module '*.css'
+
+// lodash 全局 type
+// declare global {
+//   const _: LoDashStatic
+// }
+
 `
 export const TsconfigBuildJson = `{
   "extends": "./tsconfig",
@@ -302,7 +306,6 @@ export default {
 
   external: [
     'react',
-    'react-dom',
   ],
 }
 `

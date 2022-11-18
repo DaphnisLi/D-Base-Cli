@@ -11,3 +11,5 @@
 
 4、import 无论在浏览器还是 node, 都是支持的, 但为什么配置 webpack 的时候都适用 CJS?
 因为这取决于 npm 包的导出方式, 比如 webpack 都是用 CJS 导出的 API, 那用的时候只能用 CJS 引入, 但目前大部分的 npm 包都支持了 ESM
+
+5、lint-staged 只是针对于本地暂存文件的校验, 也就是对应 git commit
