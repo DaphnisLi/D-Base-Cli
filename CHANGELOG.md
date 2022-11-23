@@ -1,3 +1,12 @@
+## 2.1.1 (2022-11-23)
+
+
+### Bug Fixes
+
+* 补充 commit 注释 ([bc2e54e](https://github.com/DaphnisLi/d-base-cli/commit/bc2e54ee132027b1afb040e565c825031969477e))
+
+
+
 # 2.1.0 (2022-11-18)
 
 
