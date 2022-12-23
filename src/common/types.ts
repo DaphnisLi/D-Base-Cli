@@ -7,7 +7,9 @@ export interface PackageJSON {
   files?: string[]
   typings?: string
   main?: string
+  exports?: object
   module?: string
+  sideEffects?: string[]
   scripts?: {
     [key: string]: string
   }

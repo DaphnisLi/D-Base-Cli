@@ -7,7 +7,7 @@ import {
   installPrettier,
   installEditorconfig,
   installTypesNode,
-  installHusky,
+  installPushlint,
   installGitignore,
   installTypeScript,
   installReact,
@@ -48,7 +48,11 @@ export const configBeforeInstall = (selectResult: SelectResult) => {
   const projecrName = getRepositoryName(selectResult[Feature.REPOSITORY_URL])
 
   // 改写项目的 package.json 基本信息
-  writePackage({ name: projecrName, files: ['package.json', 'README.md', 'dist'] })
+  writePackage({
+    name: projecrName,
+    files: ['package.json', 'README.md', 'dist'],
+    main: './src/index.js',
+  })
   installTypesNode()
 }
 
@@ -69,16 +73,16 @@ const handleInstallDumi = (selectResult: SelectResult) => {
 const handleInstallReact = (selectResult: SelectResult) => {
   if (!selectResult[Feature.REACT]) return
   installReact()
-  installRollup()
+  installRollup(selectResult)
 }
 
 const handleInstallTypeScript = (selectResult: SelectResult) => {
   if (!selectResult[Feature.TYPESCRIPT]) return
-  installTypeScript()
+  installTypeScript(selectResult)
 }
 
 const handleInstallStandard = (selectResult: SelectResult) => {
-  installHusky(selectResult)
+  installPushlint(selectResult)
   installChangelog(selectResult)
   installESLint(selectResult)
   installStylelint(selectResult)

@@ -6,7 +6,7 @@ https://www.npmjs.com/package/d-base-cli
 
 ## 使用
 ```
-npx d-base-cli create
+npx @daphnis/d-base-cli create
 ```
 
 ## [依赖解释](./Docs/DEPENDENCIES.md)
@@ -17,6 +17,9 @@ sudo -s
 cd 到项目根目录
 npm run build
 npm link
+
+在测试目录执行 d-base-cli create
+
 
 卸载 link
 npm unlink d-base-cli

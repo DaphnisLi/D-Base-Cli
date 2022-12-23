@@ -114,7 +114,7 @@ export const installEditorconfig = (selectResult: SelectResult) => {
 /**
  * 安装 Husky
  */
-export const installHusky = (selectResult: SelectResult) => {
+const installHusky = (selectResult: SelectResult) => {
   const isInstallHusky = selectResult[Feature.STANDARD].some(item => item === StandardOption.PUSHLINT)
   if (!isInstallHusky) return
 
@@ -131,6 +131,7 @@ export const installPushlint = (selectResult: SelectResult) => {
 
   const [start, success] = installPoint(StandardOption.PUSHLINT)
   start()
+  installHusky(selectResult)
   shell.exec('npm i @commitlint/cli @commitlint/config-conventional -D')
   shell.exec('npx husky add .husky/pre-push "npm run commit-lint" ')
   shell.exec('npx husky add .husky/pre-push "npm run lint" ')
@@ -169,11 +170,13 @@ export const installGitignore = () => {
 /**
  * 安装 TypeScript
  */
-export const installTypeScript = () => {
+export const installTypeScript = (selectResult: SelectResult) => {
   const [start, success] = installPoint(Feature.TYPESCRIPT)
   start()
   shell.exec('npm i typescript -D')
   createConfigFile('tsconfig.json')
+  installTypingsDTs()
+  installTsconfigBuildJson(selectResult)
   success()
 }
 
@@ -184,12 +187,12 @@ export const installReact = () => {
   const [start, success] = installPoint(Feature.REACT)
   start()
   // 为什么要将 react 安装在 devDependencies ? 因为本地开发还是需要 react 的
-  shell.exec('npm i react -D') // 最好是安装在 peerDependencies 中, 因为基础包不需要用 react, 用宿主环境的即可
+  shell.exec('npm i react -D')
 
   writePackage(c => {
     c.peerDependencies = {
       ...c?.peerDependencies,
-      react: '>=16.8.0',
+      react: '>=18',
     }
   })
   success()
@@ -213,8 +216,19 @@ const installTypingsDTs = () => {
 /**
  * 创建 tsconfig.build.json
  */
-const installTsconfigBuildJson = () => {
+const installTsconfigBuildJson = (selectResult: SelectResult) => {
   createConfigFile('tsconfig.build.json')
+  writePackage(c => {
+    delete c.main
+    c.exports = {
+      ...c.exports,
+      import: './dist/index.js',
+    }
+    c.scripts = {
+      ...c.scripts,
+      build: selectResult[Feature.REACT] ? 'rm -rf dist && tsc -p ./tsconfig.build.json && rollup --config' : 'rm -rf dist && tsc -p ./tsconfig.build.json',
+    }
+  })
 }
 
 /**
@@ -222,25 +236,29 @@ const installTsconfigBuildJson = () => {
  */
 const defaultRollup = () => {
   installRollupPlugins()
-  installTypingsDTs()
-  installTsconfigBuildJson()
 }
 
 /**
  * 安装 Rollup
  */
-export const installRollup = () => {
+export const installRollup = (selectResult: SelectResult) => {
   const [start, success] = installPoint(ReactOption.ROLLUP)
   start()
   shell.exec('npm i rollup -D')
   defaultRollup()
   createConfigFile('rollup.config.js')
   writePackage(c => {
-    c.main = 'dist/index.umd.js'
-    c.module = 'dist/index.js'
+    delete c.main
+
+    c.sideEffects = ['./src/**']
+    c.exports = {
+      ...c.exports,
+      import: './dist/index.js',
+      require: './dist/index.umd.js',
+    }
     c.scripts = {
       ...c.scripts,
-      build: 'rm -rf dist && tsc -p ./tsconfig.build.json && rollup --config',
+      build: selectResult[Feature.TYPESCRIPT] ? 'rm -rf dist && tsc -p ./tsconfig.build.json && rollup --config' : 'rm -rf dist && rollup --config',
     }
   })
   success()
