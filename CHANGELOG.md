@@ -1,3 +1,12 @@
+## 2.1.2 (2022-12-23)
+
+
+### Bug Fixes
+
+* 一些 bug 的修复和 package 字段的添加 ([2c38b2e](https://github.com/DaphnisLi/d-base-cli/commit/2c38b2e9fa03d69ce05cfadd7931117b9deaabb1))
+
+
+
 ## 2.1.1 (2022-11-23)
 
 
