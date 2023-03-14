@@ -22,7 +22,7 @@ npx @daphnis/d-base-cli create
 - 单选安装 Dumi、单选安装 React、单选安装 TypeScript
 - 多选安装各种基础功能：changlog、eslint、stylelint、prettier、editorconfig、pushlint（push 时执行 commitlint、eslint、stylelint 检查）
 - 一键发布脚本：交互式修改 npm 版本号、changelog、git push、git tag、build、npm publish
-- 各选项之间有依赖关系，会根据用户的选择，灵活调整，比如：安装了 React 后会为 eslint 添加 standard-react
+- ○各选项之间有依赖关系，会根据用户的选择，灵活调整，比如：安装了 React 后会安装 Rollup
 
 ## [依赖解释](./Docs/DEPENDENCIES.md)
 
