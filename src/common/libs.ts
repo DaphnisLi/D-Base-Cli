@@ -11,7 +11,7 @@ export const capitalLetters = (word: string) => word.replace(word.slice(0, 1), w
  * .eslintrc => Eslintrc
  * commitlint.config.js => CommitlintConfigJs
  */
-export const analyseFileName = (fileName: string) => fileName.split('.').filter(item => item).map(item => capitalLetters(item)).join('')
+export const analyzeFileName = (fileName: string) => fileName.split('.').filter(item => item).map(item => capitalLetters(item)).join('')
 
 /**
  *  获取 Git 仓库名

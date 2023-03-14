@@ -18,7 +18,7 @@ import {
 } from './installFeature'
 import { StandardOption, Feature, SelectResult } from './types'
 import { InteractOption, InteractOptionType } from '../../common/types'
-import { analyseFileName, getRepositoryName } from '../../common/libs'
+import { analyzeFileName, getRepositoryName } from '../../common/libs'
 import * as template from './template'
 import { writeFileSync } from 'fs'
 import * as shell from 'shelljs'
@@ -32,12 +32,12 @@ import { writePackage } from '../../common/operateFile'
  */
 export const createConfigFile = (fileName: string, templateName?: string) => {
   try {
-    writeFileSync(`./${fileName}`, template[templateName || analyseFileName(fileName)], { encoding: 'utf-8' })
+    writeFileSync(`./${fileName}`, template[templateName || analyzeFileName(fileName)], { encoding: 'utf-8' })
   } catch (err) {
     shell.echo(`${red(err)}`)
     shell.echo(`${red(`无法写入 ${fileName} 文件内容`)}`)
     shell.echo(`${red(`请在 ${fileName} 中添加以下内容`)}`)
-    shell.echo(`${red(analyseFileName(fileName))}`)
+    shell.echo(`${red(analyzeFileName(fileName))}`)
   }
 }
 

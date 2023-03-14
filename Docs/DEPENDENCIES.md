@@ -17,13 +17,13 @@
 [文章链接](https://juejin.cn/post/6844903677782654983)
 
 
-## comander 相关文章
+## commander 相关文章
 [文章链接](https://juejin.cn/post/6844903586833711112)
 
 
 ## shelljs
 [官方文档](https://github.com/shelljs/shelljs)
 
-## typeScript
+## TypeScript
 [compilerOptions](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
 [tsconfig.json 配置](https://juejin.cn/post/6844904178234458120#heading-14)
