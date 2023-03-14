@@ -11,6 +11,9 @@ npx @daphnis/d-base-cli create
 
 ## [依赖解释](./Docs/DEPENDENCIES.md)
 
+
+## [踩坑总结](./Docs/ERRORSUMMARY.md)
+
 ## 本地调试
 ```
 sudo -s
