@@ -7,9 +7,10 @@ npx @daphnis/d-base-cli create
 ```
 
 ## 初始化成品
+https://github.com/DaphnisLi/daphnis-base-cli-template
+
 <img width="564" alt="image" src="https://github.com/DaphnisLi/D-Base-Cli/assets/67792799/28e13796-bcee-4c1d-b66e-fdce9ad14f99">
 
-https://github.com/DaphnisLi/daphnis-base-cli-template
 
 ## 能力
 
