@@ -29,6 +29,11 @@ https://github.com/DaphnisLi/daphnis-base-cli-template
 
 ## [依赖解释](./Docs/DEPENDENCIES.md)
 
+## 未来规划
+- 更新依赖版本
+- 更新模版
+- 固定依赖版本
+- 支持 monorepo
 
 ## NPM 地址
 https://www.npmjs.com/package/@daphnis/d-base-cli
