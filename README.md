@@ -1,17 +1,6 @@
 # D-Base-Cli
 基础项目脚手架
 
-## 使用
-```
-npx @daphnis/d-base-cli create
-```
-
-## 初始化成品
-https://github.com/DaphnisLi/daphnis-base-cli-template
-
-<img width="564" alt="image" src="https://github.com/DaphnisLi/D-Base-Cli/assets/67792799/28e13796-bcee-4c1d-b66e-fdce9ad14f99">
-
-
 ## 能力
 
 - clone 新建的远端仓库，并在此基础上新建项目
@@ -19,6 +8,16 @@ https://github.com/DaphnisLi/daphnis-base-cli-template
 - 多选安装各种规范化功能：changlog、eslint、stylelint、prettier、editorconfig、pushlint（push 时执行 commitlint、eslint、stylelint 检查）
 - 一键发布脚本：交互式修改 npm 版本号、changelog、git push、git tag、build、npm publish
 - 各选项之间有依赖关系，会根据用户的选择，灵活调整，比如：安装了 React 后会安装 Rollup
+
+## 初始化成品
+https://github.com/DaphnisLi/daphnis-base-cli-template
+
+<img width="564" alt="image" src="https://github.com/DaphnisLi/D-Base-Cli/assets/67792799/28e13796-bcee-4c1d-b66e-fdce9ad14f99">
+
+## 使用
+```
+npx @daphnis/d-base-cli create
+```
 
 ## 技术栈
 - typescript：本地 type 检查、tsc 构建
