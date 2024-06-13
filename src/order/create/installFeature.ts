@@ -40,6 +40,22 @@ const installESLintPlugins = () => {
 }
 
 /**
+ * 安装 lint-staged
+ */
+const installLintStaged = () => {
+  shell.exec('npm i lint-staged -D')
+
+  writePackage(c => {
+    c['lint-staged'] = {
+      ...c['lint-staged'],
+      '*.{jsx,js,ts,tsx}': [
+        'eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx --fix'
+      ]
+    }
+  })
+}
+
+/**
  * 安装 ESLint
  */
 export const installESLint = (selectResult: SelectResult) => {
@@ -61,7 +77,17 @@ export const installESLint = (selectResult: SelectResult) => {
       lint: `eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src${isInstallStyleEslint ? " && stylelint 'src/**/*.(jsx|tsx|css|less)'" : ''}`,
       'lint-fix': `eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src --fix${isInstallStyleEslint ? " && stylelint 'src/**/*.(jsx|tsx|css|less)' --fix" : ''}`,
     }
+
+    c.husky = {
+      ...c.husky,
+      hooks: {
+        ...c.husky.hooks,
+        'pre-commit': 'npm run lint-staged'
+      }
+    }
   })
+
+  installLintStaged()
   success()
 }
 
@@ -120,6 +146,13 @@ const installHusky = (selectResult: SelectResult) => {
 
   shell.exec('npm i husky -D')
   shell.exec('npx husky install')
+
+  writePackage(c => {
+    c.scripts = {
+      ...c.scripts,
+      'postinstall': 'husky install',
+    }
+  })
 }
 
 /**
@@ -140,6 +173,13 @@ export const installPushlint = (selectResult: SelectResult) => {
     c.scripts = {
       ...c.scripts,
       'commit-lint': 'commitlint --from origin/master --to HEAD',
+    }
+    c.husky = {
+      ...c.husky,
+      hooks: {
+        ...c.husky.hooks,
+        'pre-push': 'npm run commit-lint'
+      }
     }
   })
 

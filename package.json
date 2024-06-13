@@ -12,12 +12,13 @@
     "build": "rm -rf dist && tsc --build",
     "changelog": "rm -rf CHANGELOG.md && conventional-changelog -p angular -i CHANGELOG.md -s",
     "commit-lint": "commitlint --from origin/master --to HEAD",
-    "release": "./scripts/release.js"
+    "release": "./scripts/release.js",
+    "postinstall": "husky install"
   },
   "husky": {
     "hooks": {
       "pre-push": "npm run commit-lint",
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run lint-staged"
     }
   },
   "lint-staged": {
@@ -54,8 +55,11 @@
     "eslint": "^8.20.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
-    "standard": "^17.0.0",
-    "typescript": "^4.7.4"
+    "standard": "^17.1.0",
+    "typescript": "^4.7.4",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-config-standard-react": "^13.0.0",
+    "eslint-plugin-standard": "^5.0.0"
   },
   "dependencies": {
     "chalk": "^4.1.0",
