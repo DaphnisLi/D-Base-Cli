@@ -1,3 +1,13 @@
+## 2.1.3 (2024-06-13)
+
+
+### Bug Fixes
+
+* 单词拼写错误 ([9f8b2df](https://github.com/DaphnisLi/d-base-cli/commit/9f8b2dfbe246a7652faa37db264d923778e7b991))
+* 修复 husky 问题 ([1aed02a](https://github.com/DaphnisLi/d-base-cli/commit/1aed02a3cdcbbaa62a5a0e5003c48d3a4f543d97))
+
+
+
 ## 2.1.2 (2022-12-23)
 
 
