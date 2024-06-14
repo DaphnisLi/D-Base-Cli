@@ -1,3 +1,12 @@
+# 2.2.0 (2024-06-14)
+
+
+### Bug Fixes
+
+* 修改 writePackage ([59c56ce](https://github.com/DaphnisLi/d-base-cli/commit/59c56ce442ddd91ea24564c0aa071fe35d93e66b))
+
+
+
 ## 2.1.4 (2024-06-14)
 
 
