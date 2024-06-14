@@ -5,7 +5,7 @@ import { resolve } from 'path'
 import * as shell from 'shelljs'
 import { red, yellow, green } from 'chalk'
 import { PackageJSON } from './types'
-import { set } from 'lodash-es'
+import { set } from 'lodash'
 
 /**
  * 读取指定路径下 json 文件内容
