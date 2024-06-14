@@ -23,12 +23,7 @@ export const installChangelog = (selectResult: SelectResult) => {
   start()
   shell.exec('npm i @nicecode/changelog conventional-changelog-cli -D')
 
-  writePackage(c => {
-    c.scripts = {
-      ...c.scripts,
-      changelog: 'conventional-changelog -p angular -i CHANGELOG.md -s',
-    }
-  })
+  writePackage('scripts.changelog', 'conventional-changelog -p angular -i CHANGELOG.md -s')
   success()
 }
 
@@ -47,7 +42,7 @@ const installLintStaged = () => {
 
   writePackage(c => {
     c['lint-staged'] = {
-      ...(c['lint-staged'] || {}),
+      ...(c?.['lint-staged'] || {}),
       '*.{jsx,js,ts,tsx}': [
         'eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx --fix',
       ],
@@ -71,20 +66,13 @@ export const installESLint = (selectResult: SelectResult) => {
   createConfigFile('.eslintignore')
 
   const isInstallStyleEslint = selectResult[Feature.STANDARD].includes(StandardOption.STYLELINT)
-  writePackage(c => {
-    c.scripts = {
-      ...c.scripts,
-      lint: `eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src${isInstallStyleEslint ? " && stylelint 'src/**/*.(jsx|tsx|css|less)'" : ''}`,
-      'lint-fix': `eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src --fix${isInstallStyleEslint ? " && stylelint 'src/**/*.(jsx|tsx|css|less)' --fix" : ''}`,
-    }
 
-    c.husky = {
-      ...(c.husky || {}),
-      hooks: {
-        ...(c.husky.hooks || {}),
-        'pre-commit': 'npm run lint-staged',
-      },
-    }
+  writePackage({
+    'scripts.lint': `eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src${isInstallStyleEslint ? " && stylelint 'src/**/*.(jsx|tsx|css|less)'" : ''}`,
+
+    'scripts.lint-fix': `eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx src --fix${isInstallStyleEslint ? " && stylelint 'src/**/*.(jsx|tsx|css|less)' --fix" : ''}`,
+
+    'husky.hooks.pre-commit': 'npm run lint-staged',
   })
 
   installLintStaged()
@@ -116,12 +104,8 @@ export const installPrettier = (selectResult: SelectResult) => {
   shell.exec('npm i prettier -D')
   createConfigFile('.prettierrc')
 
-  writePackage(c => {
-    c.scripts = {
-      ...c.scripts,
-      prettier: 'prettier --write "src/**/*.ts"',
-    }
-  })
+  writePackage('scripts.prettier', 'prettier --write "src/**/*.ts"')
+
   success()
 }
 
@@ -147,12 +131,7 @@ const installHusky = (selectResult: SelectResult) => {
   shell.exec('npm i husky -D')
   shell.exec('npx husky install')
 
-  writePackage(c => {
-    c.scripts = {
-      ...c.scripts,
-      postinstall: 'husky install',
-    }
-  })
+  writePackage('scripts.postinstall', 'husky install')
 }
 
 /**
@@ -169,18 +148,10 @@ export const installPushlint = (selectResult: SelectResult) => {
   shell.exec('npx husky add .husky/pre-push "npm run commit-lint" ')
   shell.exec('npx husky add .husky/pre-push "npm run lint" ')
 
-  writePackage(c => {
-    c.scripts = {
-      ...c.scripts,
-      'commit-lint': 'commitlint --from origin/master --to HEAD',
-    }
-    c.husky = {
-      ...(c.husky || {}),
-      hooks: {
-        ...(c.husky.hooks || {}),
-        'pre-push': 'npm run commit-lint',
-      },
-    }
+  writePackage({
+    'scripts.commit-lint': 'commitlint --from origin/master --to HEAD',
+
+    'husky.hooks.pre-push': 'npm run commit-lint',
   })
 
   createConfigFile('commitlint.config.js')
@@ -229,12 +200,8 @@ export const installReact = () => {
   // 为什么要将 react 安装在 devDependencies ? 因为本地开发还是需要 react 的
   shell.exec('npm i react -D')
 
-  writePackage(c => {
-    c.peerDependencies = {
-      ...c?.peerDependencies,
-      react: '>=18',
-    }
-  })
+  writePackage('peerDependencies.react', '>=16.8')
+
   success()
 }
 
@@ -258,16 +225,15 @@ const installTypingsDTs = () => {
  */
 const installTsconfigBuildJson = (selectResult: SelectResult) => {
   createConfigFile('tsconfig.build.json')
+
+  writePackage({
+    'exports.import': './dist/index.js',
+
+    'scripts.build': selectResult[Feature.REACT] ? 'rm -rf dist && tsc -p ./tsconfig.build.json && rollup --config' : 'rm -rf dist && tsc -p ./tsconfig.build.json',
+  })
+
   writePackage(c => {
     delete c.main
-    c.exports = {
-      ...c.exports,
-      import: './dist/index.js',
-    }
-    c.scripts = {
-      ...c.scripts,
-      build: selectResult[Feature.REACT] ? 'rm -rf dist && tsc -p ./tsconfig.build.json && rollup --config' : 'rm -rf dist && tsc -p ./tsconfig.build.json',
-    }
   })
 }
 
@@ -287,20 +253,22 @@ export const installRollup = (selectResult: SelectResult) => {
   shell.exec('npm i rollup -D')
   defaultRollup()
   createConfigFile('rollup.config.js')
+
+  writePackage({
+    sideEffects: ['./src/**'],
+
+    'exports.import': './dist/index.js',
+
+    'exports.require': './dist/index.umd.js',
+
+    'scripts.build': selectResult[Feature.TYPESCRIPT] ? 'rm -rf dist && tsc -p ./tsconfig.build.json && rollup --config' : 'rm -rf dist && rollup --config',
+
+  })
+
   writePackage(c => {
     delete c.main
-
-    c.sideEffects = ['./src/**']
-    c.exports = {
-      ...c.exports,
-      import: './dist/index.js',
-      require: './dist/index.umd.js',
-    }
-    c.scripts = {
-      ...c.scripts,
-      build: selectResult[Feature.TYPESCRIPT] ? 'rm -rf dist && tsc -p ./tsconfig.build.json && rollup --config' : 'rm -rf dist && rollup --config',
-    }
   })
+
   success()
 }
 
@@ -313,12 +281,7 @@ export const installRelease = () => {
   shell.cd('scripts')
   createConfigFile('release.js')
   shell.cd('../')
-  writePackage(c => {
-    c.scripts = {
-      ...c.scripts,
-      release: './scripts/release.js',
-    }
-  })
+  writePackage('scripts.release', './scripts/release.js')
 }
 
 /**
@@ -329,13 +292,12 @@ export const installDumi = () => {
   start()
   shell.exec('npm i dumi -D')
   createConfigFile('.umirc.ts')
-  writePackage(c => {
-    c.scripts = {
-      ...c.scripts,
-      start: 'dumi dev',
-      'docs:build': 'dumi build',
-    }
+
+  writePackage({
+    'scripts.start': 'dumi dev',
+    'scripts.docs:build': 'dumi build',
   })
+
   success()
 }
 

@@ -5,6 +5,7 @@ import { resolve } from 'path'
 import * as shell from 'shelljs'
 import { red, yellow, green } from 'chalk'
 import { PackageJSON } from './types'
+import { set } from 'lodash-es'
 
 /**
  * 读取指定路径下 json 文件内容
@@ -78,16 +79,16 @@ export const initRepository = (repositoryUrl: string, projecrName: string) => {
  *  packageContent.version = '1.0.0'
  * })
  */
-export function writePackage (key: keyof PackageJSON, value: string | object): void
-export function writePackage (obj: PackageJSON): void
+export function writePackage (key: string, value: string | object): void
+export function writePackage (obj: object): void
 export function writePackage (fun: (packageContent: PackageJSON) => void): void
 export function writePackage (param: any, value?: string): void {
   const packageJson = readJsonFile<PackageJSON>('./package.json')
   if (typeof param === 'string') {
-    packageJson[param] = value
+    set(packageJson, param, value)
   } else if (typeof param === 'object') {
     for (const key in param) {
-      packageJson[key] = param[key]
+      set(packageJson, key, param[key])
     }
   } else if (typeof param === 'function') {
     param(packageJson)
