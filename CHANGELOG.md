@@ -1,3 +1,12 @@
+## 2.2.1 (2024-06-14)
+
+
+### Bug Fixes
+
+* lodash ([600f5f4](https://github.com/DaphnisLi/d-base-cli/commit/600f5f42cd704e738910758eab3f82ca73e58ffa))
+
+
+
 # 2.2.0 (2024-06-14)
 
 
