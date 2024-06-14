@@ -47,10 +47,10 @@ const installLintStaged = () => {
 
   writePackage(c => {
     c['lint-staged'] = {
-      ...c['lint-staged'],
+      ...(c['lint-staged'] || {}),
       '*.{jsx,js,ts,tsx}': [
-        'eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx --fix'
-      ]
+        'eslint -c ./.eslintrc --ext .jsx,.js,.ts,.tsx --fix',
+      ],
     }
   })
 }
@@ -79,11 +79,11 @@ export const installESLint = (selectResult: SelectResult) => {
     }
 
     c.husky = {
-      ...c.husky,
+      ...(c.husky || {}),
       hooks: {
-        ...c.husky.hooks,
-        'pre-commit': 'npm run lint-staged'
-      }
+        ...(c.husky.hooks || {}),
+        'pre-commit': 'npm run lint-staged',
+      },
     }
   })
 
@@ -150,7 +150,7 @@ const installHusky = (selectResult: SelectResult) => {
   writePackage(c => {
     c.scripts = {
       ...c.scripts,
-      'postinstall': 'husky install',
+      postinstall: 'husky install',
     }
   })
 }
@@ -175,11 +175,11 @@ export const installPushlint = (selectResult: SelectResult) => {
       'commit-lint': 'commitlint --from origin/master --to HEAD',
     }
     c.husky = {
-      ...c.husky,
+      ...(c.husky || {}),
       hooks: {
-        ...c.husky.hooks,
-        'pre-push': 'npm run commit-lint'
-      }
+        ...(c.husky.hooks || {}),
+        'pre-push': 'npm run commit-lint',
+      },
     }
   })
 
