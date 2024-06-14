@@ -1,3 +1,12 @@
+## 2.1.4 (2024-06-14)
+
+
+### Bug Fixes
+
+* 修改 hooks 问题 ([9c668a6](https://github.com/DaphnisLi/d-base-cli/commit/9c668a6e565798687a533eb678a8e7a4b4c91cca))
+
+
+
 ## 2.1.3 (2024-06-13)
 
 
