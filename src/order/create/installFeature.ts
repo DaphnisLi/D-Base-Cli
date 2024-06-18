@@ -291,7 +291,7 @@ export const installDumi = () => {
   const [start, success] = installPoint(Feature.DUMI)
   start()
   shell.exec('npm i dumi -D')
-  createConfigFile('.umirc.ts')
+  createConfigFile('.dumirc.ts')
 
   writePackage({
     'scripts.start': 'dumi dev',
